@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--
+        - Titre :       menu_view
+        - Description : Layout de mise en forme des éléments qui vont entré dans la list view du menu principal
+        - Créateur :    Joël Pfund
+        - Créé le :     30.04.2015
+        - Modifié le :  30.04.2015
+     -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:padding="1sp"
+        android:layout_gravity="center_vertical"
+        />
+
+    <TextView android:id="@+id/textMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"
+        android:textSize="45sp"
+        android:gravity="center" />
+
+</LinearLayout>
