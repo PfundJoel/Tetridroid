@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".GameGrid"
+            android:label="@string/title_activity_grid_game"
+            android:parentActivityName=".MenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pfund.tpi.tetridroid.MenuActivity" />
+        </activity>
     </application>
 
 </manifest>

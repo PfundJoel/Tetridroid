@@ -14,10 +14,10 @@ public class ShapeO extends Brick{
     public ShapeO(){
         super(5, 1, Color.YELLOW);
 
-        this.vectorBrick.add(new Positioning(0, 0));
-        this.vectorBrick.add(new Positioning(0, -1));
-        this.vectorBrick.add(new Positioning(1, 0));
-        this.vectorBrick.add(new Positioning(1, -1));
+        this.vectorBrick.add(new Positionning(0, 0));
+        this.vectorBrick.add(new Positionning(0, -1));
+        this.vectorBrick.add(new Positionning(1, 0));
+        this.vectorBrick.add(new Positionning(1, -1));
     }
 
 }

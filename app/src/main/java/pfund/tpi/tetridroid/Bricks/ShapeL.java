@@ -14,9 +14,9 @@ public class ShapeL extends Brick {
     public ShapeL(){
         super(5, 1, Color.LTGRAY); // TODO : METTRE DU ORANGE
 
-        this.vectorBrick.add(new Positioning(0, 0));
-        this.vectorBrick.add(new Positioning(1, 0));
-        this.vectorBrick.add(new Positioning(2, 0));
-        this.vectorBrick.add(new Positioning(2, -1));
+        this.vectorBrick.add(new Positionning(0, 0));
+        this.vectorBrick.add(new Positionning(1, 0));
+        this.vectorBrick.add(new Positionning(2, 0));
+        this.vectorBrick.add(new Positionning(2, -1));
     }
 }

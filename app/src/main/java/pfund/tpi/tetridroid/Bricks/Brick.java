@@ -23,8 +23,7 @@ public abstract class Brick {
     public Brick(int x, int y, int color) {
         this.coordX = x;
         this.coordY = y;
-        this.color = (Color) color; // TODO : Cast couleur / int
-
+        // this.color = color; // TODO : Cast couleur / int
     }
 
     private Random random = new Random();
@@ -50,10 +49,10 @@ public abstract class Brick {
         Exemple: 0, -1 => X = 0, donc pas de déplacement latéral et Y = -1, donc un cran vers le haut
                  1,  0 => X = 1, donc un cran à droite et Y = 0 donc pas de déplacement de hauteur
     */
-    public class Positioning {
+    public class Positionning {
         private int x, y;
 
-        public Positioning(int x, int y) {
+        public Positionning(int x, int y) {
             this.x = x;
             this.y = y;
         }
@@ -74,11 +73,11 @@ public abstract class Brick {
             return this.y;
         }
 
-        public Positioning getPlace() {
+        public Positionning getPlace(int coordX, int coordY) {
             int xCoord = Brick.this.coordX + this.x;
             int yCoord = Brick.this.coordY + this.y;
 
-            return Brick.this.getPlace(coordX, coordY); // TODO : Changer le type de valeur renvoi (tab, ...)
+            return this.getPlace(xCoord, yCoord);
         }
     }
 }
