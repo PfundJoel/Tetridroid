@@ -15,6 +15,7 @@ public class Level {
     private int NbLineToReach = 5;
     private int NbLine = 0;
     private double Speed = 1.0;
+    double delayBeforeGetDown = 1;
     private int Score = 0;
 
 
@@ -28,6 +29,7 @@ public class Level {
 
     public void SetSpeed(double speed){
         Speed = speed;
+        delayBeforeGetDown = 1/Speed;
     }
 
     public int getLevel() {
@@ -39,9 +41,15 @@ public class Level {
     }
 
     public double getSpeed(){
-        return Speed;
+        return delayBeforeGetDown;
     }
 
+    /*  Summary :   Change le nombre de lignes à atteindre (s'il n'est pas déjà à la limite fixée)
+    *               avant d'atteindre le prochain niveau
+    *   Param. :    Nouveau niveau du joueur
+    *   Returns:    Nombre de lignes à atteindre pour le prochain niveau
+    *   Exception : -
+    */
     public int ChangeLineToReach(int level){
 
         if (NbLineToReach < LimitNbLine) {
@@ -52,13 +60,24 @@ public class Level {
         return NbLineToReach;
     }
 
+    /*  Summary :   Augmente la vitesse de descente des pièces
+    *   Param. :    Vitesse en cours à augmenter
+    *   Returns:    Nouvelle vitesse
+    *   Exception : -
+    */
     public double SpeedUp(double SpeedToChange) {
 
         SpeedToChange += SpeedToAdd;
+        delayBeforeGetDown = 1/SpeedToChange;
 
         return SpeedToChange;
     }
 
+    /*  Summary :   Ajoute les points au score actuel
+    *   Param. :    Points à ajouter
+    *   Returns:    Nothing
+    *   Exception : -
+    */
     public void AddPoint(int PointToAdd){
         Score += PointToAdd;
     }
