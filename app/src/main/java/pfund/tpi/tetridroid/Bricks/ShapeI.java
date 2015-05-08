@@ -12,7 +12,7 @@ import android.graphics.Color;
 public class ShapeI extends Brick{
 
     public ShapeI() {
-        super(5, 1, Color.CYAN);
+        super(5, 1, "Cyan");
 
         this.vectorBrick.add(new Positionning(-1, 0));
         this.vectorBrick.add(new Positionning(0, 0));

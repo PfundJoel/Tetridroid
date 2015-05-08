@@ -1,6 +1,9 @@
 package pfund.tpi.tetridroid.Bricks;
 
 import android.graphics.Color;
+import android.media.Image;
+
+import pfund.tpi.tetridroid.R;
 
 /**
  * Titre :       ShapeO
@@ -12,11 +15,12 @@ import android.graphics.Color;
 public class ShapeZ extends Brick {
 
     public ShapeZ(){
-        super(5, 1, Color.RED);
+        super(5, 1, "Red");
 
         this.vectorBrick.add(new Positionning(-1, -1));
         this.vectorBrick.add(new Positionning(0, -1));
         this.vectorBrick.add(new Positionning(0, 0));
         this.vectorBrick.add(new Positionning(1, 0));
+
     }
 }

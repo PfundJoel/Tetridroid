@@ -1,6 +1,8 @@
 package pfund.tpi.tetridroid.Bricks;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+
 import java.util.Random;
 import java.util.Vector;
 
@@ -18,14 +20,19 @@ public abstract class Brick {
     public Vector vectorBrick = new Vector(nbCoord);
 
     private int coordX, coordY;
-    private Color color;
+    private String color;
 
-    public Brick(int x, int y, int color) {
+    public Brick(int x , int y, String color) {
         this.coordX = x;
         this.coordY = y;
-        // this.color = color; // TODO : Cast couleur / int
+        this.color = color;
     }
 
+    public Brick() {
+        this.coordX = 5;
+        this.coordY = 1;
+        this.color = color;
+    }
     private Random random = new Random();
 
     public Brick newBrick(){

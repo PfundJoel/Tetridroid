@@ -12,7 +12,7 @@ import android.graphics.Color;
 public class ShapeL extends Brick {
 
     public ShapeL(){
-        super(5, 1, Color.LTGRAY); // TODO : METTRE DU ORANGE
+        super(5, 1, "Orange");
 
         this.vectorBrick.add(new Positionning(0, 0));
         this.vectorBrick.add(new Positionning(1, 0));

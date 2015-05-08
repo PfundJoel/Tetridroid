@@ -1,5 +1,6 @@
 package pfund.tpi.tetridroid;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,7 @@ public class MenuActivity extends ActionBarActivity {
     private String QUIT = "Quitter";
     private String TEXTMENU = "textMenu";
     private String IMAGE = "img";
+
 
     // On launch this view
     @Override
@@ -91,6 +93,7 @@ public class MenuActivity extends ActionBarActivity {
                 //take the HashMap content
                 HashMap<String, String> map = (HashMap<String, String>) myListView.getItemAtPosition(position);
                 if (map.get(TEXTMENU) == PLAY_SOLO) {
+                    launchGame(view);
                     //launch the Game setting view;
                 } else if (map.get(TEXTMENU) == PLAY_VERSUS) {
                     //launch the Game "Versus Mode" view;
@@ -104,13 +107,13 @@ public class MenuActivity extends ActionBarActivity {
         });
     }
 
-    /* Modèle de méthode pour lancer une autre activité
+    // Modèle de méthode pour lancer une autre activité
 
-    private void launchOptionMenu(View view) {
-    Intent intent = new Intent(this, SettingsActivity.class);
+    private void launchGame(View view) {
+    Intent intent = new Intent(this, GameGrid.class);
     startActivity(intent);
     }
-    */
+
 
     /*PAS BESOINS POUR L'INSTANT
 

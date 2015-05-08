@@ -12,7 +12,7 @@ import android.graphics.Color;
 public class ShapeO extends Brick{
 
     public ShapeO(){
-        super(5, 1, Color.YELLOW);
+        super(5, 1, "Yellow");
 
         this.vectorBrick.add(new Positionning(0, 0));
         this.vectorBrick.add(new Positionning(0, -1));

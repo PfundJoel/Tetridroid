@@ -1,28 +1,34 @@
 package pfund.tpi.tetridroid;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.GridLayout;
 
 import java.util.Random;
 
 /**
  * Titre :       GameGrid
- * Description : Classe qui gere la grille où se déroule le jeu
+ * Description : Classe qui gère la grille où se déroule le jeu
  * Créateur :    Joël Pfund
  * Créé le :     04.05.2015
- * Modifié le :  06.05.2015
+ * Modifié le :  07.05.2015
  */
 
 public class GameGrid extends ActionBarActivity {
 
+    private int ScreenWidth, ScreenHeight;
     private int GridWidth = 10;
     private int GridHeight = 23;
     private Button[][] ArrayButton;
+    public GridLayout gridLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +36,18 @@ public class GameGrid extends ActionBarActivity {
         setContentView(R.layout.activity_grid_game);
 
         ArrayButton = new Button[GridHeight][GridWidth];
+        gridLayout = (GridLayout) findViewById(R.id.myGridLayout);
 
-        for(int i = 0; i < GridHeight; i++) {
-            for(int j = 0; j < GridWidth; j++) {
-                ArrayButton[i][j] = new Button(this);
-                ArrayButton[i][j].setBackgroundColor(Color.TRANSPARENT);
+        getScreenSize();
+
+        for(int x = 0; x < GridHeight; x++) {
+            for(int y = 0; y < GridWidth; y++) {
+
+                ArrayButton[x][y] = new Button(this);
+                ArrayButton[x][y].setBackgroundColor(Color.TRANSPARENT);
+                gridLayout.addView(ArrayButton[x][y]);
+
+                setViewParams(ArrayButton[x][y]);
             }
         }
     } // OnCreate
@@ -44,7 +57,7 @@ public class GameGrid extends ActionBarActivity {
     *   Returns:    Nothing
     *   Exception : -
     */
-    // TODO : Pour la suite, chercher uniquement dans les lignes où des pièces tombent quand ça sera fait
+    // TODO : Pour la suite, chercher uniquement dans les lignes où des pièces tombent quand ça sera fait => Economie de ressources/temps
     public void CheckLine(){
 
         int Counter = 0;
@@ -165,6 +178,46 @@ public class GameGrid extends ActionBarActivity {
         }
     } // CreateRandomLine
 
+    /*  Summary :   Set les paramêtres de taille des boutons dans la grille de jeu
+    *   Param. :    Bouton auquel appliquer les réglages
+    *   Returns:    Nothing
+    *   Exception : -
+    */
+    public void setViewParams(Button button){
+
+        int Margin = 1;
+
+        GridLayout.LayoutParams ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
+
+        ButtonParams.height = (ScreenHeight*3/4 ) / GridHeight;
+        ButtonParams.width = ButtonParams.height;
+
+        ButtonParams.setMargins(Margin, Margin, Margin, Margin);
+
+        System.out.println("ButtonParams.height = "+ ButtonParams.height);
+
+        button.setLayoutParams(ButtonParams);
+    } // SetViewParams
+
+
+    /*  Summary :   Set la taille de la grille de jeu
+    *   Param. :    Nothing
+    *   Returns:    Nothing
+    *   Exception : -
+    */
+    public void getScreenSize(){
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        ScreenWidth = size.x;
+        ScreenHeight = size.y;
+
+        System.out.println(ScreenWidth);
+        System.out.println(ScreenHeight);
+
+
+    }
     /*
     INUTILE POUR L'INSTANT...
     @Override

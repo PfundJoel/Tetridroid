@@ -12,7 +12,7 @@ import android.graphics.Color;
 public class ShapeJ extends Brick {
 
     public ShapeJ(){
-        super(5, 1, Color.BLUE);
+        super(5, 1, "Blue");
 
         this.vectorBrick.add(new Positionning(0, -1));
         this.vectorBrick.add(new Positionning(0, 0));

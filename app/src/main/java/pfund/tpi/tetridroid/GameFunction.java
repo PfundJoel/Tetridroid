@@ -7,6 +7,8 @@ import android.os.Handler;
 import java.util.Timer;
 import java.util.concurrent.Delayed;
 
+import pfund.tpi.tetridroid.Bricks.Brick;
+
 
 /**
  * Title :       GameFunction
@@ -14,7 +16,7 @@ import java.util.concurrent.Delayed;
  *               nouvelle partie, mise à jour des points, ...
  * Author :      Joël Pfund
  * Created :     31.04.2015
- * Modified :    06.05.2015
+ * Modified :    07.05.2015
  */
 public class GameFunction {
 
@@ -44,6 +46,7 @@ public class GameFunction {
 
         GameIsStarted = true;
         DelayBeforeStart();
+
 
     }
 
@@ -116,7 +119,7 @@ public class GameFunction {
     }
 
     /*  Summary :   Ajoute les points au score total
-    *   Param. :    Points to add to the score
+    *   Param. :    Points that we have to add to the score
     *   Returns:    Nothing
     *   Exception : -
     */
