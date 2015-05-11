@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GameGrid"
-            android:label="@string/title_activity_grid_game"
+            android:name=".GameView"
+            android:label="@string/title_activity_game_view"
             android:parentActivityName=".MenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

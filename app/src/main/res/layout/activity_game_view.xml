@@ -1,0 +1,123 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="pfund.tpi.tetridroid.GameView">
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/TextViewTitleSolo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/TitleSolo"
+                    />
+
+                <ImageView
+                    android:id="@+id/BrickHold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background_material_dark"/>
+
+            </LinearLayout> <!-- LinearLayout horizontal titre, brick hold -->
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutLines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/TextViewNbLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    />
+
+                <TextView
+                    android:id="@+id/TextViewNbLineToReach"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    />
+
+            </LinearLayout> <!-- LinearLayout horizontal pour les lignes -->
+
+            <TextView
+                android:id="@+id/TextViewLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                />
+
+        </LinearLayout> <!-- LinearLayout vertical gauche -->
+
+        <fragment
+            android:id="@+id/FragmentGameGrid"
+            android:name = "pfund.tpi.tetridroid.GameGridFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_game_grid"
+            />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/BrickNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/background_material_dark"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:id="@+id/TextViewScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                />
+
+            <TextView
+                android:id="@+id/TextViewHighScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                />
+
+        </LinearLayout> <!-- LinearLayout vertical droite -->
+
+    </LinearLayout> <!-- Grand LinearLayout horizontal -->
+
+</RelativeLayout>

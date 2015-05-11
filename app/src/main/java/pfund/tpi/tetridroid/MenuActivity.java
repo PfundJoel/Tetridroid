@@ -16,7 +16,7 @@ import java.util.HashMap;
     Description : Classe qui contient notamment la gestion du menu principal
     Créateur :    Joël Pfund
     Créé le :     30.04.2015
-    Modifié le :  30.04.2015
+    Modifié le :  08.05.2015
 
  */
 public class MenuActivity extends ActionBarActivity {
@@ -107,12 +107,14 @@ public class MenuActivity extends ActionBarActivity {
         });
     }
 
+    // TODO : Penser au onExit() au cas où la personne Kill le process depuis le menu principal
+
     // Modèle de méthode pour lancer une autre activité
 
     private void launchGame(View view) {
-    Intent intent = new Intent(this, GameGrid.class);
+    Intent intent = new Intent(this, GameView.class);
     startActivity(intent);
-    }
+    } // launchGame
 
 
     /*PAS BESOINS POUR L'INSTANT

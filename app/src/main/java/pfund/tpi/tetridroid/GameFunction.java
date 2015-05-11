@@ -30,7 +30,7 @@ public class GameFunction {
     int ForcedDescent = 2;
 
     Level myLevel = new Level();
-    GameGrid gameGrid = new GameGrid();
+    GameGridFragment gameGridFragment = new GameGridFragment();
 
 
     // State of the game
@@ -46,7 +46,6 @@ public class GameFunction {
 
         GameIsStarted = true;
         DelayBeforeStart();
-
 
     }
 
@@ -115,7 +114,7 @@ public class GameFunction {
     *   Exception : -
     */
     public void CheckGrid(){
-        gameGrid.CheckLine();
+        gameGridFragment.CheckLine();
     }
 
     /*  Summary :   Ajoute les points au score total

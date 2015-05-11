@@ -64,31 +64,39 @@ public class GameGridFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
-
-        ArrayButton = new Button[GridHeight][GridWidth];
-        gridLayout = (GridLayout) getActivity().findViewById(R.id.myGridLayout);
-
-        getScreenSize();
-
-        for(int x = 0; x < GridHeight; x++) {
-            for(int y = 0; y < GridWidth; y++) {
-
-                ArrayButton[x][y] = new Button(getActivity());
-                ArrayButton[x][y].setBackgroundColor(Color.RED);
-
-                // TODO : Il est soit disant "NullPointerException"
-                gridLayout.addView(ArrayButton[x][y]);
-
-                setViewParams(ArrayButton[x][y]);
-            }
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game_grid, container, false);
+        View v = inflater.inflate(R.layout.fragment_game_grid, container, false);
+
+        ArrayButton = new Button[GridHeight][GridWidth];
+
+        getScreenSize();
+
+        gridLayout = (GridLayout) v.findViewById(R.id.myGridLayout);
+
+        int cpt = 0;
+        for(int x = 0; x < GridHeight; x++) {
+            for(int y = 0; y < GridWidth; y++) {
+
+                cpt ++;
+                ArrayButton[x][y] = new Button(getActivity());
+
+                ArrayButton[x][y].setId(cpt);
+                ArrayButton[x][y].setBackgroundColor(Color.RED);
+
+                // Pour checker les tegs
+                System.out.println(ArrayButton[x][y].getId());
+
+                gridLayout.addView(ArrayButton[x][y]);
+
+                setViewParams(ArrayButton[x][y]);
+            }
+        }
+        return v;
     }
 
     /*  Summary :   Contrôle de la grille de jeu pour chercher si des lignes sont complètes
@@ -143,7 +151,6 @@ public class GameGridFragment extends Fragment {
         } while (Counter < GridWidth);
 
     } //DeleteLine
-
 
     /*  Summary :   Ajout de ligne(s) au bas de la grille
     *   Param. :    Nombre de lignes à ajouter
@@ -280,6 +287,10 @@ public class GameGridFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void onPause(){
+
     }
 
     /**
