@@ -4,10 +4,7 @@ package pfund.tpi.tetridroid;
 
 import android.os.Handler;
 
-import java.util.Timer;
-import java.util.concurrent.Delayed;
-
-import pfund.tpi.tetridroid.Bricks.Brick;
+import pfund.tpi.tetridroid.Fragments.GameGridFragment;
 
 
 /**
@@ -16,7 +13,7 @@ import pfund.tpi.tetridroid.Bricks.Brick;
  *               nouvelle partie, mise à jour des points, ...
  * Author :      Joël Pfund
  * Created :     31.04.2015
- * Modified :    07.05.2015
+ * Modified :    11.05.2015
  */
 public class GameFunction {
 
