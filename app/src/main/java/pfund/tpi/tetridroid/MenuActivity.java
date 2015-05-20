@@ -1,6 +1,9 @@
 package pfund.tpi.tetridroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +34,7 @@ public class MenuActivity extends ActionBarActivity {
     private String TEXTMENU = "textMenu";
     private String IMAGE = "img";
 
+    public static final String PREFS_OPTIONS = "Tetridroid";
 
     // On launch this view
     @Override
@@ -94,11 +98,12 @@ public class MenuActivity extends ActionBarActivity {
                 HashMap<String, String> map = (HashMap<String, String>) myListView.getItemAtPosition(position);
                 if (map.get(TEXTMENU) == PLAY_SOLO) {
                     launchGame(view);
-                    //launch the Game setting view;
+
                 } else if (map.get(TEXTMENU) == PLAY_VERSUS) {
                     //launch the Game "Versus Mode" view;
                 } else if (map.get(TEXTMENU) == OPTION) {
-                    //launch the Option menu view;
+                    launchOptionMenu(view);
+
                 } else if (map.get(TEXTMENU) == QUIT) {
                     //quit the Game
                     System.exit(0);
@@ -109,13 +114,15 @@ public class MenuActivity extends ActionBarActivity {
 
     // TODO : Penser au onExit() au cas où la personne Kill le process depuis le menu principal
 
-    // Modèle de méthode pour lancer une autre activité
-
     private void launchGame(View view) {
     Intent intent = new Intent(this, GameView.class);
     startActivity(intent);
     } // launchGame
 
+    private void launchOptionMenu(View view) {
+        Intent intent = new Intent(this, OptionView.class);
+        startActivity(intent);
+    } // launchOptionMenu
 
     /*PAS BESOINS POUR L'INSTANT
 

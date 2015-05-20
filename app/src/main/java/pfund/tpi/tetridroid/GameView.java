@@ -1,28 +1,29 @@
 package pfund.tpi.tetridroid;
 
-import android.graphics.Color;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.GridLayout;
 
-import java.lang.reflect.Array;
+import pfund.tpi.tetridroid.Bricks.Brick;
+import pfund.tpi.tetridroid.Fragments.GameGridFragment;
+import pfund.tpi.tetridroid.Fragments.LevelFragment;
+import pfund.tpi.tetridroid.Fragments.ScoreFragment;
 
 /**
  * Titre :       GameView
- * Description : Classe qui gere l'affichage du jeu et des intéractions entre
- *               les différentes activités et fragments
- * Créateur :    Joël Pfund
+ * Description : Classe qui gere l'affichage du jeu et des interactions entre
+ *               les differentes activites et fragments
+ * Créateur :    Joel Pfund
  * Créé le :     08.05.2015
  * Modifié le :  08.05.2015
  */
 
 public class GameView extends ActionBarActivity
-     implements GameGridFragment.OnFragmentInteractionListener{
+     implements GameGridFragment.OnFragmentInteractionListener,
+                ScoreFragment.OnFragmentInteractionListener,
+                LevelFragment.OnFragmentInteractionListener{
 
 
     @Override
@@ -30,8 +31,24 @@ public class GameView extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
+        GameFunction currentGame = new GameFunction();
+
+        currentGame.StartNewGame();
+
     }
 
+    /*  Summary :   Lance la piece sur la grille de jeu en recuperant les coordonnees de la piece
+    *               afin de faire changer la couleur des cases
+    *   Param. :    la brique a afficher sur la grille
+    *   Returns:    nothing
+    *   Exception : -
+    */
+    public void launchNewrick(Brick brick){
+        int[][] position = brick.coordBrick;
+        for (int x = 0; x < position.length; x++){
+
+        }
+    }
     public void onFragmentInteraction(Uri uri) {
         // The user selected the headline of an article from the HeadlinesFragment
         // Do something here to display that article

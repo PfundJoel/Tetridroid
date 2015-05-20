@@ -1,8 +1,10 @@
 package pfund.tpi.tetridroid;
 
-
-
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Toast;
 
 import pfund.tpi.tetridroid.Fragments.GameGridFragment;
 
@@ -15,8 +17,9 @@ import pfund.tpi.tetridroid.Fragments.GameGridFragment;
  * Created :     31.04.2015
  * Modified :    11.05.2015
  */
-public class GameFunction {
+public class GameFunction extends OptionView {
 
+    public static final String PREFS_OPTIONS = "Tetridroid";
 
     // Score points
     int SingleLine = 100;
@@ -44,7 +47,11 @@ public class GameFunction {
         GameIsStarted = true;
         DelayBeforeStart();
 
+        checkOptions();
+        Toast.makeText(getApplicationContext(),
+                "Game is started !", Toast.LENGTH_LONG).show();
     }
+
 
     public boolean getGameState(){
 
@@ -97,12 +104,14 @@ public class GameFunction {
 
         // TODO: Ajouter une animation sympa
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        /*handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // StartGame
+                Toast.makeText(getApplicationContext(),
+                        "Game is started !", Toast.LENGTH_LONG).show();
             }
-        }, 3000);
+        }, 3000);*/
 
     }
     /*  Summary :   Contrôle de la grille pour voir s'il faut éliminer des lignes
@@ -122,5 +131,33 @@ public class GameFunction {
     public void UpdateScore(int PointToAdd){
 
         myLevel.AddPoint(PointToAdd);
+    }
+
+    /*  Summary :   Contrôle les options gérer les lecteurs de son et de musique
+    *   Param. :    -
+    *   Returns:    Nothing
+    *   Exception : -
+    */
+    private MediaPlayer checkOptions() {
+
+        String isMusicOn = PlayerProfile.getString(SP_Music, "");
+        String isSoundOn = PlayerProfile.getString(SP_Sound, "");
+
+        MediaPlayer TetrisMusic = MediaPlayer.create(this, R.raw.tetrissong);
+
+        // TODO: Changer les sons du jeu
+        MediaPlayer GameSounds = MediaPlayer.create(this, R.raw.tetrissong);
+
+        if (isMusicOn == "On"){
+            TetrisMusic.start();
+            TetrisMusic.setLooping(true);
+        }
+
+        if (isSoundOn == "Off"){
+
+            GameSounds.reset();
+        }
+
+        return GameSounds;
     }
 }

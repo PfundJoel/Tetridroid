@@ -9,6 +9,10 @@
     <string name="title_activity_game_view">GameView</string>
 
     <string name="TitleSolo">Mode Solo</string>
+    <string name="title_activity_option_view">OptionView</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_settings_view">SettingsView</string>
 
 
 

@@ -19,6 +19,15 @@
         <activity
             android:name=".GameView"
             android:label="@string/title_activity_game_view"
+            android:parentActivityName=".MenuActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pfund.tpi.tetridroid.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".OptionView"
+            android:label="@string/title_activity_option_view"
             android:parentActivityName=".MenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

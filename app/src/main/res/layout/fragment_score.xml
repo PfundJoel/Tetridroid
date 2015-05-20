@@ -1,0 +1,31 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pfund.tpi.tetridroid.Fragments.ScoreFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TextViewScore"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:text="0"
+            android:textSize="40dp"
+            android:textStyle="bold|italic"/>
+
+        <TextView
+            android:id="@+id/TextViewHighScore"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:text="0"
+            android:textSize="40dp"
+            android:textStyle="bold|italic"/>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -3,17 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pfund.tpi.tetridroid.GameGridFragment">
+    tools:context="pfund.tpi.tetridroid.Fragments.GameGridFragment">
 
-    <GridLayout
-        android:id="@+id/myGridLayout"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:columnCount="10"
-        android:rowCount="23"
         android:orientation="horizontal"
-        android:background="#ff686bff">
-    </GridLayout>
+        android:gravity="center_horizontal"
+        android:paddingTop="5sp">
+
+        <ImageView
+            android:id="@+id/BrickHold"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:background="@color/background_material_dark" />
+
+        <GridLayout
+            android:id="@+id/myGridLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="10"
+            android:rowCount="23"
+            android:orientation="horizontal"
+            android:background="#ffcbd2d7">
+        </GridLayout>
+
+        <ImageView
+            android:id="@+id/BrickNext"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:background="@color/background_material_dark"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
 
 </FrameLayout>

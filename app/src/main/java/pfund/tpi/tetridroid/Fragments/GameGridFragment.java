@@ -1,9 +1,11 @@
-package pfund.tpi.tetridroid;
+package pfund.tpi.tetridroid.Fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,23 +17,19 @@ import android.widget.Button;
 import android.widget.GridLayout;
 
 import java.util.Random;
+import java.util.Vector;
+
+import pfund.tpi.tetridroid.Bricks.Brick;
+import pfund.tpi.tetridroid.R;
 
 /**
  * Titre :       GameGridFragment
- * Description : Classe qui gere le fragment de la grille de jeu qui s'affiche dans l'activité du jeu
- * Créateur :    Joël Pfund
- * Créé le :     08.05.2015
- * Modifié le :  08.05.2015
+ * Description : Classe qui gere le fragment de la grille de jeu qui s'affiche dans l'activite du jeu
+ * Crï¿½ateur :    Joel Pfund
+ * Crï¿½ï¿½ le :     08.05.2015
+ * Modifiï¿½ le :  11.05.2015
  */
 public class GameGridFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,12 +40,9 @@ public class GameGridFragment extends Fragment {
     public GridLayout gridLayout;
 
     // Instanciation d'un nouveau fragment
-    public static GameGridFragment newInstance(String param1, String param2) {
+    public static GameGridFragment newInstance() {
         GameGridFragment fragment = new GameGridFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -59,11 +54,6 @@ public class GameGridFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
-        }
     }
 
     @Override
@@ -78,18 +68,13 @@ public class GameGridFragment extends Fragment {
 
         gridLayout = (GridLayout) v.findViewById(R.id.myGridLayout);
 
-        int cpt = 0;
+        // Remplissage de la grille de jeu avec les boutons de base
         for(int x = 0; x < GridHeight; x++) {
             for(int y = 0; y < GridWidth; y++) {
 
-                cpt ++;
                 ArrayButton[x][y] = new Button(getActivity());
 
-                ArrayButton[x][y].setId(cpt);
-                ArrayButton[x][y].setBackgroundColor(Color.RED);
-
-                // Pour checker les tegs
-                System.out.println(ArrayButton[x][y].getId());
+                ArrayButton[x][y].setBackgroundColor(Color.TRANSPARENT);
 
                 gridLayout.addView(ArrayButton[x][y]);
 
@@ -99,12 +84,12 @@ public class GameGridFragment extends Fragment {
         return v;
     }
 
-    /*  Summary :   Contrôle de la grille de jeu pour chercher si des lignes sont complètes
+    /*  Summary :   Contrï¿½le de la grille de jeu pour chercher si des lignes sont complï¿½tes
     *   Param. :    Nothing
     *   Returns:    Nothing
     *   Exception : -
     */
-    // TODO : Pour la suite, chercher uniquement dans les lignes où des pièces tombent quand ça sera fait => Economie de ressources/temps
+    // TODO : Pour la suite, chercher uniquement dans les lignes ou des pieces tombent quand ca sera fait => Economie de ressources/temps
     public void CheckLine(){
 
         int Counter = 0;
@@ -124,18 +109,18 @@ public class GameGridFragment extends Fragment {
         }
     } //CheckLine
 
-    /*  Summary :   Effacer la ligne et faire descendre les pièces du dessus
-    *   Param. :    Numéro de la ligne à supprimer
+    /*  Summary :   Effacer la ligne et faire descendre les piï¿½ces du dessus
+    *   Param. :    Numï¿½ro de la ligne ï¿½ supprimer
     *   Returns:    Nothing
     *   Exception : -
     */
-    // TODO: A contrôler pour les lignes multiples à supprimer
+    // TODO: A controler pour les lignes multiples a supprimer
     public void DeleteLine(int LineNumber){
 
         ColorDrawable buttonColor;
         int Counter = 0;
 
-        // Bouclie qui décale toutes les lignes vers le bas jusqu'à ce qu'ils n'y aient plus de boutons colorés au dessus-d'elles
+        // Bouclie qui dï¿½cale toutes les lignes vers le bas jusqu'ï¿½ ce qu'ils n'y aient plus de boutons colorï¿½s au dessus-d'elles
         do {
             Counter = 0;
 
@@ -153,7 +138,7 @@ public class GameGridFragment extends Fragment {
     } //DeleteLine
 
     /*  Summary :   Ajout de ligne(s) au bas de la grille
-    *   Param. :    Nombre de lignes à ajouter
+    *   Param. :    Nombre de lignes ï¿½ ajouter
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -174,8 +159,8 @@ public class GameGridFragment extends Fragment {
         }
     } // AddLine
 
-    /*  Summary :   Créer un nombre de lignes d'après le chiffre passé en paramètre de couleurs aléatoires
-    *   Param. :    Nombre de lignes à ajouter
+    /*  Summary :   Crï¿½er un nombre de lignes d'aprï¿½s le chiffre passï¿½ en paramï¿½tre de couleurs alï¿½atoires
+    *   Param. :    Nombre de lignes ï¿½ ajouter
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -184,12 +169,13 @@ public class GameGridFragment extends Fragment {
         Random random = new Random();
         int LineToDo;
 
+        int randomHole = random.nextInt(9);
+
         for (int x = 0; x <= NbLineToAdd; x++){
             for (int y = 0; y < GridWidth; y++) {
 
                 LineToDo = GridHeight-x;
 
-                int randomHole = random.nextInt(9);
                 int randomNumber = random.nextInt(6);
 
                 if (y == randomHole) {
@@ -198,25 +184,25 @@ public class GameGridFragment extends Fragment {
                 else{
                     switch (randomNumber) {
                         case 0:
-                            ArrayButton[LineToDo][y].setBackgroundColor(Color.BLUE);
+                            ArrayButton[LineToDo][y].setBackgroundResource(R.drawable.bugdroidblue);
                             break;
                         case 1:
-                            ArrayButton[LineToDo][y].setBackgroundColor(Color.CYAN);
+                            ArrayButton[LineToDo][y].setBackgroundResource(R.drawable.bugdroidcyan);
                             break;
                         case 2:
-                            ArrayButton[LineToDo][y].setBackgroundColor(Color.YELLOW);
+                            ArrayButton[LineToDo][y].setBackgroundResource(R.drawable.bugdroidyellow);
                             break;
                         case 3:
-                            ArrayButton[LineToDo][y].setBackgroundColor(Color.RED);
+                            ArrayButton[LineToDo][y].setBackgroundResource(R.drawable.bugdroidred);
                             break;
                         case 4:
-                            ArrayButton[LineToDo][y].setBackgroundColor(Color.GREEN);
+                            ArrayButton[LineToDo][y].setBackgroundResource(R.drawable.bugdroidgreen);
                             break;
                         case 5:
-                            ArrayButton[LineToDo][y].setBackgroundColor(Color.MAGENTA);
+                            ArrayButton[LineToDo][y].setBackgroundResource(R.drawable.bugdroidviolet);
                             break;
                         case 6:
-                            ArrayButton[LineToDo][y].setBackgroundColor(Color.GRAY);
+                            ArrayButton[LineToDo][y].setBackgroundResource(R.drawable.bugdroidorange);
                             break;
                     }
                 }
@@ -224,8 +210,8 @@ public class GameGridFragment extends Fragment {
         }
     } // CreateRandomLine
 
-    /*  Summary :   Set les paramêtres de taille des boutons dans la grille de jeu
-    *   Param. :    Bouton auquel appliquer les réglages
+    /*  Summary :   Set les paramï¿½tres de taille des boutons dans la grille de jeu
+    *   Param. :    Bouton auquel appliquer les rï¿½glages
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -239,8 +225,6 @@ public class GameGridFragment extends Fragment {
         ButtonParams.width = ButtonParams.height;
 
         ButtonParams.setMargins(Margin, Margin, Margin, Margin);
-
-        System.out.println("ButtonParams.height = "+ ButtonParams.height);
 
         button.setLayoutParams(ButtonParams);
     } // SetViewParams
@@ -272,6 +256,7 @@ public class GameGridFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -289,8 +274,9 @@ public class GameGridFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
     public void onPause(){
-
+        super.onPause();
     }
 
     /**

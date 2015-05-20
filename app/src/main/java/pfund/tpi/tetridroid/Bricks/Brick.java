@@ -11,13 +11,13 @@ import java.util.Vector;
  * Description : Classe qui gere les pièces du jeu, les fait tourner/se deplacer, s'arreter
  * Créateur :    Joël Pfund
  * Créé le :     30.04.2015
- * Modifié le :  01.05.2015
+ * Modifié le :  13.05.2015
  */
 
 public abstract class Brick {
 
     private int nbCoord = 4;
-    public Vector vectorBrick = new Vector(nbCoord);
+    public int[][] coordBrick = new int[nbCoord][];
 
     private int coordX, coordY;
     private String color;
@@ -33,6 +33,7 @@ public abstract class Brick {
         this.coordY = 1;
         this.color = color;
     }
+
     private Random random = new Random();
 
     public Brick newBrick(){
