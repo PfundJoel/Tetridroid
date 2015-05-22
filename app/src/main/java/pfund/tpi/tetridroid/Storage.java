@@ -6,7 +6,12 @@ import android.preference.PreferenceManager;
 
 
 /**
- * Created by pfundjo on 20.05.2015.
+ * Title :       Storage
+ * Description : Classe qui gère le stockage et la recuperation des informations pour le jeu
+ *               (musique, son, briques lorsqu on quitte le jeu et qu on le reprend
+ * Author :      Joël Pfund
+ * Created :     20.04.2015
+ * Modified :    21.05.2015
  */
 public class Storage extends MenuActivity{
 
@@ -15,13 +20,13 @@ public class Storage extends MenuActivity{
 
     public Storage() {
 
-        try {
+        /*try {
             PlayerProfile = getSharedPreferences(PREFS_OPTIONS, 0);
 
         } catch (NullPointerException e) {
             PreferenceManager.getDefaultSharedPreferences(this);
 
-        }
+        }*/
 
     }
 
@@ -32,9 +37,9 @@ public class Storage extends MenuActivity{
     */
     public void preferenceEditor(String key, String value){
 
-        SharedPreferences.Editor editor = PlayerProfile.edit();
+        /*SharedPreferences.Editor editor = PlayerProfile.edit();
 
         editor.putString(key, value);
-        editor.commit();
+        editor.commit();*/
     } // preferenceEditor
 }

@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.Switch;
 
 import java.util.Random;
 import java.util.Vector;
@@ -25,9 +27,9 @@ import pfund.tpi.tetridroid.R;
 /**
  * Titre :       GameGridFragment
  * Description : Classe qui gere le fragment de la grille de jeu qui s'affiche dans l'activite du jeu
- * Cr�ateur :    Joel Pfund
- * Cr�� le :     08.05.2015
- * Modifi� le :  11.05.2015
+ * Createur :    Joel Pfund
+ * Cree le :     08.05.2015
+ * Modifie le :  11.05.2015
  */
 public class GameGridFragment extends Fragment {
 
@@ -36,8 +38,9 @@ public class GameGridFragment extends Fragment {
     private int ScreenWidth, ScreenHeight;
     private int GridWidth = 10;
     private int GridHeight = 23;
-    private Button[][] ArrayButton;
+    public Button[][] ArrayButton;
     public GridLayout gridLayout;
+    private ImageView NextBrickView;
 
     // Instanciation d'un nouveau fragment
     public static GameGridFragment newInstance() {
@@ -66,6 +69,7 @@ public class GameGridFragment extends Fragment {
 
         getScreenSize();
 
+        NextBrickView = (ImageView) v.findViewById(R.id.BrickNext);
         gridLayout = (GridLayout) v.findViewById(R.id.myGridLayout);
 
         // Remplissage de la grille de jeu avec les boutons de base
@@ -84,12 +88,12 @@ public class GameGridFragment extends Fragment {
         return v;
     }
 
-    /*  Summary :   Contr�le de la grille de jeu pour chercher si des lignes sont compl�tes
+    /*  Summary :   Controle de la grille de jeu pour chercher si des lignes sont completes
     *   Param. :    Nothing
     *   Returns:    Nothing
     *   Exception : -
     */
-    // TODO : Pour la suite, chercher uniquement dans les lignes ou des pieces tombent quand ca sera fait => Economie de ressources/temps
+    // TODO : Pour la suite, chercher uniquement dans les lignes ou des pieces tombent quand ca sera fait => Economie de ressources & temps
     public void CheckLine(){
 
         int Counter = 0;
@@ -109,8 +113,8 @@ public class GameGridFragment extends Fragment {
         }
     } //CheckLine
 
-    /*  Summary :   Effacer la ligne et faire descendre les pi�ces du dessus
-    *   Param. :    Num�ro de la ligne � supprimer
+    /*  Summary :   Effacer la ligne et faire descendre les pieces du dessus
+    *   Param. :    Numero de la ligne a supprimer
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -120,7 +124,7 @@ public class GameGridFragment extends Fragment {
         ColorDrawable buttonColor;
         int Counter = 0;
 
-        // Bouclie qui d�cale toutes les lignes vers le bas jusqu'� ce qu'ils n'y aient plus de boutons color�s au dessus-d'elles
+        // Bouclie qui decale toutes les lignes vers le bas jusqu'a ce qu'ils n'y aient plus de boutons colores au dessus-d'elles
         do {
             Counter = 0;
 
@@ -158,6 +162,7 @@ public class GameGridFragment extends Fragment {
             }
         }
     } // AddLine
+
 
     /*  Summary :   Cr�er un nombre de lignes d'apr�s le chiffre pass� en param�tre de couleurs al�atoires
     *   Param. :    Nombre de lignes � ajouter
@@ -210,8 +215,66 @@ public class GameGridFragment extends Fragment {
         }
     } // CreateRandomLine
 
-    /*  Summary :   Set les param�tres de taille des boutons dans la grille de jeu
-    *   Param. :    Bouton auquel appliquer les r�glages
+
+    /*  Summary :   Lance la piece sur la grille de jeu en recuperant les coordonnees de la piece
+    *               afin de faire changer la couleur des cases ou elle se trouve
+    *   Param. :    la brique a afficher sur la grille
+    *   Returns:    nothing
+    *   Exception : -
+    */
+    public void launchNewBrick(Brick brick){
+        int posX = 5;
+        int posY = 1;
+
+        int[][] position = brick.coordBrick;
+
+        for (int i = 0; i < position.length; i++){
+            ArrayButton[posX+position[i][0]][posY + position[i][1]].setBackgroundResource(brick.brickBackground);
+        }
+    }
+
+
+    /*  Summary :   Lance la piece sur la grille de jeu en recuperant les coordonnees de la piece
+    *               afin de faire changer la couleur des cases ou elle se trouve
+    *   Param. :    la brique a afficher sur la grille
+    *   Returns:    nothing
+    *   Exception : -
+    */
+    public Brick createNextBrick(){
+
+        Brick nextBrick = createNextBrick();
+
+        switch(nextBrick.brickBackground){
+            case R.drawable.bugdroidblue:
+                NextBrickView.setBackgroundResource(R.drawable.brickblue);
+                break;
+            case R.drawable.bugdroidcyan:
+                NextBrickView.setBackgroundResource(R.drawable.brickcyan);
+                break;
+            case R.drawable.bugdroidgreen:
+                NextBrickView.setBackgroundResource(R.drawable.brickgreen);
+                break;
+            case R.drawable.bugdroidorange:
+                NextBrickView.setBackgroundResource(R.drawable.brickorange);
+                break;
+            case R.drawable.bugdroidred:
+                NextBrickView.setBackgroundResource(R.drawable.brickred);
+                break;
+            case R.drawable.bugdroidviolet:
+                NextBrickView.setBackgroundResource(R.drawable.brickviolet);
+                break;
+            default:
+                NextBrickView.setBackgroundResource(R.drawable.brickyellow);
+                break;
+        }
+
+        return nextBrick;
+
+    } // createNextBrick
+
+
+    /*  Summary :   Set les parametres de taille des boutons dans la grille de jeu
+    *   Param. :    Bouton auquel appliquer les reglages
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -227,6 +290,7 @@ public class GameGridFragment extends Fragment {
         ButtonParams.setMargins(Margin, Margin, Margin, Margin);
 
         button.setLayoutParams(ButtonParams);
+
     } // SetViewParams
 
 
@@ -266,6 +330,7 @@ public class GameGridFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
     }
 
     @Override

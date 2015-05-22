@@ -17,7 +17,7 @@ public class ShapeS extends Brick {
         this.coordBrick[0][0] = -1;        this.coordBrick[0][1] = 0;
         this.coordBrick[1][0] = 0;        this.coordBrick[1][1] = 0;
         this.coordBrick[2][0] = 0;        this.coordBrick[2][1] = -1;
-        this.coordBrick[3][0] = 21;        this.coordBrick[3][1] = -1;
+        this.coordBrick[3][0] = 1;        this.coordBrick[3][1] = -1;
 
     }
 }

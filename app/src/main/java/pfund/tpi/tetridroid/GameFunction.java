@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.IOException;
+
+import pfund.tpi.tetridroid.Bricks.Brick;
 import pfund.tpi.tetridroid.Fragments.GameGridFragment;
 
 
@@ -15,7 +18,7 @@ import pfund.tpi.tetridroid.Fragments.GameGridFragment;
  *               nouvelle partie, mise à jour des points, ...
  * Author :      Joël Pfund
  * Created :     31.04.2015
- * Modified :    11.05.2015
+ * Modified :    22.05.2015
  */
 public class GameFunction extends OptionView {
 
@@ -32,12 +35,11 @@ public class GameFunction extends OptionView {
     Level myLevel = new Level();
     GameGridFragment gameGridFragment = new GameGridFragment();
 
-
     // State of the game
     private boolean GameIsStarted = false;
     private boolean GameIsRunning = false;
 
-
+    // Constructeur
     public GameFunction(){
 
     }
@@ -47,9 +49,9 @@ public class GameFunction extends OptionView {
         GameIsStarted = true;
         DelayBeforeStart();
 
-        checkOptions();
-        Toast.makeText(getApplicationContext(),
-                "Game is started !", Toast.LENGTH_LONG).show();
+        //MediaPlayer music = checkOptions();
+        //Toast.makeText(this,
+        //        "Game is started !", Toast.LENGTH_LONG).show();
     }
 
 
@@ -84,6 +86,7 @@ public class GameFunction extends OptionView {
         }
     }
 
+
     /*  Summary :   Met fin au jeu si le joueur confirme l'action
     *   Param. :    Nothing
     *   Returns:    Nothing
@@ -95,6 +98,7 @@ public class GameFunction extends OptionView {
         setGameState(false);
     }
 
+
     /*  Summary :   Compte à rrebours de 3 secondes avant de démarrer/reprendre la partie
     *   Param. :    Nothing
     *   Returns:    Nothing
@@ -104,16 +108,19 @@ public class GameFunction extends OptionView {
 
         // TODO: Ajouter une animation sympa
         final Handler handler = new Handler();
-        /*handler.postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // StartGame
-                Toast.makeText(getApplicationContext(),
-                        "Game is started !", Toast.LENGTH_LONG).show();
+
             }
-        }, 3000);*/
+        }, 3000);
+
+        // gameGridFragment.launchNewBrick(nextBrick);
 
     }
+
+
     /*  Summary :   Contrôle de la grille pour voir s'il faut éliminer des lignes
     *   Param. :    Nothing
     *   Returns:    Nothing
@@ -122,6 +129,7 @@ public class GameFunction extends OptionView {
     public void CheckGrid(){
         gameGridFragment.CheckLine();
     }
+
 
     /*  Summary :   Ajoute les points au score total
     *   Param. :    Points that we have to add to the score
@@ -133,21 +141,23 @@ public class GameFunction extends OptionView {
         myLevel.AddPoint(PointToAdd);
     }
 
+
     /*  Summary :   Contrôle les options gérer les lecteurs de son et de musique
     *   Param. :    -
     *   Returns:    Nothing
     *   Exception : -
     */
-    private MediaPlayer checkOptions() {
+    private MediaPlayer checkOptions(){
 
-        String isMusicOn = PlayerProfile.getString(SP_Music, "");
+/*      String isMusicOn = PlayerProfile.getString(SP_Music, "");
         String isSoundOn = PlayerProfile.getString(SP_Sound, "");
 
         MediaPlayer TetrisMusic = MediaPlayer.create(this, R.raw.tetrissong);
-
+*/
         // TODO: Changer les sons du jeu
         MediaPlayer GameSounds = MediaPlayer.create(this, R.raw.tetrissong);
 
+/*
         if (isMusicOn == "On"){
             TetrisMusic.start();
             TetrisMusic.setLooping(true);
@@ -157,7 +167,7 @@ public class GameFunction extends OptionView {
 
             GameSounds.reset();
         }
-
+*/
         return GameSounds;
     }
 }
