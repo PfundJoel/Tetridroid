@@ -19,7 +19,7 @@ import pfund.tpi.tetridroid.R;
  * Created :     31.04.2015
  * Modified :    22.05.2015
  */
-public abstract class GameFunction extends OptionView {
+public class GameFunction extends OptionView {
 
     public static final String PREFS_OPTIONS = "Tetridroid";
 

@@ -35,7 +35,7 @@ public class GameView extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
-        currentGame = new GameFunction(){ };
+        currentGame = new GameFunction();
 
         currentGame.StartNewGame();
 
