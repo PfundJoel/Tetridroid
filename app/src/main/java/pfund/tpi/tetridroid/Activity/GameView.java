@@ -19,7 +19,7 @@ import pfund.tpi.tetridroid.R;
  * Description : Classe qui gere l'affichage du jeu et des interactions entre
  *               les differentes activites et fragments
  * Createur :    Joel Pfund
- * Créé le :     08.05.2015
+ * Cr éé le :     08.05.2015
  * Modifié le :  08.05.2015
  */
 
@@ -29,25 +29,25 @@ public class GameView extends ActionBarActivity
                 LevelFragment.OnFragmentInteractionListener{
 
     GameFunction currentGame;
-    Brick brick;
-    Fragment gridFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
-        currentGame = new GameFunction();
+        currentGame = new GameFunction(){ };
 
-        //currentGame.StartNewGame();
+        currentGame.StartNewGame();
 
-        currentGame.launchNewBrick(brick.newBrick());
+        currentGame.gameLoop();
+
 
     } // onCreate
 
 
     public void onFragmentInteraction(Uri uri) {
-        // The user selected the headline of an article from the HeadlinesFragment
-        // Do something here to display that article
+
+
 
     } // onFragmentInteraction
 

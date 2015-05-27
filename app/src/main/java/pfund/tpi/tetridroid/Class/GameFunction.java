@@ -1,7 +1,9 @@
 package pfund.tpi.tetridroid.Class;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.view.View;
 
 import pfund.tpi.tetridroid.Activity.OptionView;
 import pfund.tpi.tetridroid.Bricks.Brick;
@@ -17,14 +19,14 @@ import pfund.tpi.tetridroid.R;
  * Created :     31.04.2015
  * Modified :    22.05.2015
  */
-public class GameFunction extends OptionView {
+public abstract class GameFunction extends OptionView {
 
     public static final String PREFS_OPTIONS = "Tetridroid";
 
     int[][] position;
 
     Level myLevel = new Level();
-    GameGridFragment gameGridFragment = new GameGridFragment();
+    GameGridFragment gameGridFragment;
 
     Brick currentBrick;
     Brick nextBrick;
@@ -43,12 +45,9 @@ public class GameFunction extends OptionView {
         GameIsStarted = true;
         GameIsRunning = true;
 
-
-        nextBrick.newBrick();
-
         DelayBeforeStart();
 
-        gameLoop();
+        CreateBrick();
 
     } // startNewGame
 
@@ -92,8 +91,6 @@ public class GameFunction extends OptionView {
     *   Exception : -
     */
     public void StopGame(){
-
-
         setGameState(false);
     }
 
@@ -123,10 +120,18 @@ public class GameFunction extends OptionView {
     *   Returns:    Nothing
     *   Exception : -
     */
-    private void gameLoop() {
+    public void gameLoop() {
 
+        // La piece "next" devient la piece en cours
         currentBrick = nextBrick;
+
+        // On lance la brique sur la grille
         launchNewBrick(currentBrick);
+
+        // On cree une nouvelle piece
+        CreateBrick();
+
+        //
         nextBrick.newBrick();
 
         do {
@@ -153,6 +158,20 @@ public class GameFunction extends OptionView {
             }
         }
         return true;
+    }
+
+
+    /*  Summary :   Creer une nouvelle piece
+    *               afin de faire changer la couleur des cases
+    *   Param. :    la brique a afficher sur la grille
+    *   Returns:    nothing
+    *   Exception : -
+    */
+    public void CreateBrick(){
+
+        nextBrick = new Brick() { };
+
+
     }
 
 

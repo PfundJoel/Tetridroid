@@ -12,17 +12,24 @@ import java.util.Random;
  */
 public abstract class Brick {
 
-    private int nbCoord = 4;
-    public int[][] coordBrick = new int[nbCoord][];
+    public int[][] coordBrick = new int[3][];
 
-    private int coordX = 5, coordY = 1;
+    private int coordX = 5;
+    private int coordY = 1;
 
     public int getCoordX(){
         return coordX;
     }
-
     public int getCoordY(){
         return coordY;
+    }
+
+    public void setCoordX(int CoordX){
+        coordX = CoordX;
+    }
+
+    public void setCoordY(int CoordY){
+        coordX = CoordY;
     }
 
     public int brickBackground;
@@ -31,6 +38,7 @@ public abstract class Brick {
         this.coordX = x;
         this.coordY = y;
     }
+
     // Constructeur vide
     public Brick() { }
 
@@ -79,7 +87,7 @@ public abstract class Brick {
             }
         } else if(move == 0){
             for(int i = 0; i < coordBrick.length; i++) {
-                coordBrick[i][1] += move;
+                coordBrick[i][1] ++;
             }
         } else {
             for(int i = 0; i < coordBrick.length; i++) {
