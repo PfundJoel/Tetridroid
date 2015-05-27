@@ -6,8 +6,8 @@ import pfund.tpi.tetridroid.R;
 
 /**
  * Titre :       ShapeO
- * Description : Classe qui gere la pièce carrée du jeu
- * Créateur :    Joël Pfund
+ * Description : Class that manage the O shape
+ * Créateur :    Joel Pfund
  * Créé le :     30.04.2015
  * Modifié le :  24.05.2015
  */
