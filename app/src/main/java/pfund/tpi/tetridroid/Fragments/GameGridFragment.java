@@ -4,24 +4,23 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.Random;
-import java.util.Vector;
 
 import pfund.tpi.tetridroid.Bricks.Brick;
+import pfund.tpi.tetridroid.Class.OnSwipeTouchListener;
 import pfund.tpi.tetridroid.R;
 
 /**
@@ -40,7 +39,8 @@ public class GameGridFragment extends Fragment {
     private int GridHeight = 23;
     public Button[][] ArrayButton;
     public GridLayout gridLayout;
-    private ImageView NextBrickView;
+    private ImageView nextBrickView;
+    private ImageView holdBrickView;
 
     // Instanciation d'un nouveau fragment
     public static GameGridFragment newInstance() {
@@ -69,7 +69,18 @@ public class GameGridFragment extends Fragment {
 
         getScreenSize();
 
-        NextBrickView = (ImageView) v.findViewById(R.id.BrickNext);
+        nextBrickView = (ImageView) v.findViewById(R.id.BrickNext);
+        holdBrickView = (ImageView) v.findViewById(R.id.BrickHold);
+
+        holdBrickView.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return gestureDetector.onTouchEvent(event);
+            }
+
+        });
+
         gridLayout = (GridLayout) v.findViewById(R.id.myGridLayout);
 
         // Remplissage de la grille de jeu avec les boutons de base
@@ -78,13 +89,36 @@ public class GameGridFragment extends Fragment {
 
                 ArrayButton[x][y] = new Button(getActivity());
 
-                ArrayButton[x][y].setBackgroundColor(Color.TRANSPARENT);
+                ArrayButton[x][y].setBackgroundResource(R.drawable.square);
 
                 gridLayout.addView(ArrayButton[x][y]);
 
                 setViewParams(ArrayButton[x][y]);
             }
         }
+
+        gridLayout.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+
+            public void onSwipeTop() {
+                Toast.makeText(getActivity(), "haut", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeRight() {
+                Toast.makeText(getActivity(), "droite", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeLeft() {
+                Toast.makeText(getActivity(), "gauche", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeBottom() {
+                Toast.makeText(getActivity(), "bas", Toast.LENGTH_SHORT).show();
+            }
+
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
         return v;
     }
 
@@ -142,7 +176,7 @@ public class GameGridFragment extends Fragment {
     } //DeleteLine
 
     /*  Summary :   Ajout de ligne(s) au bas de la grille
-    *   Param. :    Nombre de lignes � ajouter
+    *   Param. :    Nombre de lignes a ajouter
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -164,8 +198,8 @@ public class GameGridFragment extends Fragment {
     } // AddLine
 
 
-    /*  Summary :   Cr�er un nombre de lignes d'apr�s le chiffre pass� en param�tre de couleurs al�atoires
-    *   Param. :    Nombre de lignes � ajouter
+    /*  Summary :   Creer un nombre de lignes d'apres le chiffre passe en parametre de couleurs aleatoires
+    *   Param. :    Nombre de lignes a ajouter
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -184,7 +218,7 @@ public class GameGridFragment extends Fragment {
                 int randomNumber = random.nextInt(6);
 
                 if (y == randomHole) {
-                    ArrayButton[GridHeight][x].setBackgroundColor(Color.TRANSPARENT);
+                    ArrayButton[GridHeight][x].setBackgroundResource(R.drawable.square);
                 }
                 else{
                     switch (randomNumber) {
@@ -231,7 +265,7 @@ public class GameGridFragment extends Fragment {
         for (int i = 0; i < position.length; i++){
             ArrayButton[posX+position[i][0]][posY + position[i][1]].setBackgroundResource(brick.brickBackground);
         }
-    }
+    } // launchNewBrick
 
 
     /*  Summary :   Lance la piece sur la grille de jeu en recuperant les coordonnees de la piece
@@ -246,28 +280,27 @@ public class GameGridFragment extends Fragment {
 
         switch(nextBrick.brickBackground){
             case R.drawable.bugdroidblue:
-                NextBrickView.setBackgroundResource(R.drawable.brickblue);
+                nextBrickView.setBackgroundResource(R.drawable.brickblue);
                 break;
             case R.drawable.bugdroidcyan:
-                NextBrickView.setBackgroundResource(R.drawable.brickcyan);
+                nextBrickView.setBackgroundResource(R.drawable.brickcyan);
                 break;
             case R.drawable.bugdroidgreen:
-                NextBrickView.setBackgroundResource(R.drawable.brickgreen);
+                nextBrickView.setBackgroundResource(R.drawable.brickgreen);
                 break;
             case R.drawable.bugdroidorange:
-                NextBrickView.setBackgroundResource(R.drawable.brickorange);
+                nextBrickView.setBackgroundResource(R.drawable.brickorange);
                 break;
             case R.drawable.bugdroidred:
-                NextBrickView.setBackgroundResource(R.drawable.brickred);
+                nextBrickView.setBackgroundResource(R.drawable.brickred);
                 break;
             case R.drawable.bugdroidviolet:
-                NextBrickView.setBackgroundResource(R.drawable.brickviolet);
+                nextBrickView.setBackgroundResource(R.drawable.brickviolet);
                 break;
             default:
-                NextBrickView.setBackgroundResource(R.drawable.brickyellow);
+                nextBrickView.setBackgroundResource(R.drawable.brickyellow);
                 break;
         }
-
         return nextBrick;
 
     } // createNextBrick
@@ -358,4 +391,5 @@ public class GameGridFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
 }

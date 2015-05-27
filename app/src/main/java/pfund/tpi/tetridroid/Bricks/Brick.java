@@ -1,73 +1,67 @@
 package pfund.tpi.tetridroid.Bricks;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
-
 import java.util.Random;
-import java.util.Vector;
 
-import pfund.tpi.tetridroid.R;
 
 /*
  * Titre :       Brick
  * Description : Classe qui gere les pièces du jeu, les fait tourner/se deplacer, s'arreter
  * Créateur :    Joël Pfund
  * Créé le :     30.04.2015
- * Modifié le :  13.05.2015
+ * Modifié le :  24.05.2015
  */
-
 public abstract class Brick {
 
     private int nbCoord = 4;
     public int[][] coordBrick = new int[nbCoord][];
 
-    private int coordX, coordY;
-    private String color;
+    private int coordX = 5, coordY = 1;
+
+    public int getCoordX(){
+        return coordX;
+    }
+
+    public int getCoordY(){
+        return coordY;
+    }
+
     public int brickBackground;
 
-    public Brick(int x , int y, String color) {
+    public Brick(int x , int y) {
         this.coordX = x;
         this.coordY = y;
-        this.color = color;
     }
-
-    public Brick() {
-        this.coordX = 5;
-        this.coordY = 1;
-    }
+    // Constructeur vide
+    public Brick() { }
 
     private Random random = new Random();
 
-
+   /*  Summary :   Creer une nouvelle brique a mettre dans la case nextBrick puis a faire apparaitre sur le jeu
+   *   Param. :    -
+   *   Returns:    Une piece qui a une image de fond (couleur) et des coordonnees pour ses elements
+   *   Exception : -
+   */
     public Brick newBrick(){
 
         int nextBrick = random.nextInt(6);
 
         switch (nextBrick){
             case 0:
-                brickBackground = R.drawable.bugdroidcyan;
                 return new ShapeI();
             case 1:
-                brickBackground = R.drawable.bugdroidblue;
                 return new ShapeJ();
             case 2:
-                brickBackground = R.drawable.bugdroidorange;
                 return new ShapeL();
             case 3:
-                brickBackground = R.drawable.bugdroidyellow;
                 return new ShapeO();
             case 4:
-                brickBackground = R.drawable.bugdroidgreen;
                 return new ShapeS();
             case 5:
-                brickBackground = R.drawable.bugdroidviolet;
                 return new ShapeT();
             default:
-                brickBackground = R.drawable.bugdroidred;
                 return new ShapeZ();
         }
-    }
+    } // newBrick
 
 
    /*  Summary :   Deplace la brique en fonction de l'ordre qui lui est envoye.
@@ -78,7 +72,7 @@ public abstract class Brick {
    *   Returns:    Nothing
    *   Exception : -
    */
-    public void Positionning(byte move) {
+    public void Positionning(int move) {
         if (move == -1){
             for(int i = 0; i < coordBrick.length; i++) {
                 coordBrick[i][0] += move;

@@ -24,8 +24,7 @@
             android:layout_height="wrap_content"
             android:columnCount="10"
             android:rowCount="23"
-            android:orientation="horizontal"
-            android:background="#ffcbd2d7">
+            android:orientation="horizontal">
         </GridLayout>
 
         <ImageView

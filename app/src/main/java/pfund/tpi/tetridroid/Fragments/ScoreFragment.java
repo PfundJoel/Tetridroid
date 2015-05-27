@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import pfund.tpi.tetridroid.Level;
+import pfund.tpi.tetridroid.Class.Level;
 import pfund.tpi.tetridroid.R;
 
 

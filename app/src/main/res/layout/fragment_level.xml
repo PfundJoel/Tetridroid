@@ -7,48 +7,88 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TextViewNbLine"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="40dp"
+                android:layout_weight="1"
+                android:textSize="30dp"
                 android:textStyle="bold|italic"
-                android:text="0" />
+                android:text="LINE CLEARS : "
+                android:textColor="#ffffffff" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="40dp"
-                android:textStyle="bold|italic"
-                android:text=" / " />
+                android:layout_weight="3"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/TextViewNbLineToReach"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="40dp"
-                android:textStyle="bold|italic"
-                android:text="5" />
+                <TextView
+                    android:id="@+id/TextViewNbLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="30dp"
+                    android:textStyle="bold|italic"
+                    android:text="0"
+                    android:textColor="#ffffffff" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="30dp"
+                    android:textStyle="bold|italic"
+                    android:text=" / "
+                    android:textColor="#ffffffff" />
+
+                <TextView
+                    android:id="@+id/TextViewNbLineToReach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="30dp"
+                    android:textStyle="bold|italic"
+                    android:text="5"
+                    android:textColor="#ffffffff" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/TextViewLevel"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="40dp"
-            android:textStyle="bold|italic"
-            android:text="1" />
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="30dp"
+                android:textStyle="bold|italic"
+                android:text="LEVEL : "
+                android:textColor="#ffffffff" />
+
+            <TextView
+                android:id="@+id/TextViewLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="30dp"
+                android:textStyle="bold|italic"
+                android:text="1"
+                android:textColor="#ffffffff" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
