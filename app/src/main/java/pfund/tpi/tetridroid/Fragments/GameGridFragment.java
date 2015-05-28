@@ -42,6 +42,12 @@ public class GameGridFragment extends Fragment {
     private ImageView nextBrickView;
     private ImageView holdBrickView;
 
+    GridLayout.LayoutParams ButtonParams;
+
+    public Button[][] getArrayButton() {
+        return ArrayButton;
+    }
+
     // Instanciation d'un nouveau fragment
     public static GameGridFragment newInstance() {
         GameGridFragment fragment = new GameGridFragment();
@@ -256,24 +262,6 @@ public class GameGridFragment extends Fragment {
     *   Returns:    nothing
     *   Exception : -
     */
-    public void launchNewBrick(Brick brick){
-        int posX = 5;
-        int posY = 1;
-
-        int[][] position = brick.coordBrick;
-
-        for (int i = 0; i < position.length; i++){
-            ArrayButton[posX+position[i][0]][posY + position[i][1]].setBackgroundResource(brick.brickBackground);
-        }
-    } // launchNewBrick
-
-
-    /*  Summary :   Lance la piece sur la grille de jeu en recuperant les coordonnees de la piece
-    *               afin de faire changer la couleur des cases ou elle se trouve
-    *   Param. :    la brique a afficher sur la grille
-    *   Returns:    nothing
-    *   Exception : -
-    */
     public Brick createNextBrick(){
 
         Brick nextBrick = createNextBrick();
@@ -315,14 +303,20 @@ public class GameGridFragment extends Fragment {
 
         int Margin = 1;
 
-        GridLayout.LayoutParams ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
+        ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
+
+        System.out.println(ScreenHeight + " " + GridHeight);
+        System.out.println(ButtonParams.toString());
 
         ButtonParams.height = (ScreenHeight*3/4 ) / GridHeight;
         ButtonParams.width = ButtonParams.height;
-
         ButtonParams.setMargins(Margin, Margin, Margin, Margin);
 
         button.setLayoutParams(ButtonParams);
+
+
+
+
 
     } // SetViewParams
 
@@ -380,8 +374,8 @@ public class GameGridFragment extends Fragment {
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
+     * to the Activity and potentially other Fragments contained in that
+     * Activity.
      * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"

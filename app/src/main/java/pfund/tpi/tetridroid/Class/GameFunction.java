@@ -1,10 +1,11 @@
 package pfund.tpi.tetridroid.Class;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.view.View;
+import android.support.v7.app.AlertDialog;
 
+import pfund.tpi.tetridroid.Activity.GameView;
 import pfund.tpi.tetridroid.Activity.OptionView;
 import pfund.tpi.tetridroid.Bricks.Brick;
 import pfund.tpi.tetridroid.Fragments.GameGridFragment;
@@ -26,18 +27,19 @@ public class GameFunction extends OptionView {
     int[][] position;
 
     Level myLevel = new Level();
-    GameGridFragment gameGridFragment;
+    GameView gameView;
 
     Brick currentBrick;
     Brick nextBrick;
 
+    GameGridFragment gameGridFragment;
     // State of the game
     private boolean GameIsStarted = false;
     private boolean GameIsRunning = false;
 
     // Constructeur
-    public GameFunction(){
-
+    public GameFunction(GameView gameView){
+        this.gameView = gameView;
     }
 
     public void StartNewGame(){
@@ -46,8 +48,6 @@ public class GameFunction extends OptionView {
         GameIsRunning = true;
 
         DelayBeforeStart();
-
-        CreateBrick();
 
     } // startNewGame
 
@@ -73,6 +73,11 @@ public class GameFunction extends OptionView {
     // Met le jeu en pause s'il est en cours ou le reprend s'il est en pause
 
 
+    /*  Summary :   Put the game in pause if it's running or resume after a delay if it's paused
+    *   Param. :    Nothing
+    *   Returns:    Nothing
+    *   Exception : -
+    */
     public void PauseGame() {
         setCurrentGameState(!getCurrentGameState());
 
@@ -80,9 +85,9 @@ public class GameFunction extends OptionView {
             DelayBeforeStart();
         }
         else{
-            // Stopper le mouvement des pièces...
+            setCurrentGameState(false);
         }
-    }
+    } // PauseGame
 
 
     /*  Summary :   Met fin au jeu si le joueur confirme l'action
@@ -91,11 +96,35 @@ public class GameFunction extends OptionView {
     *   Exception : -
     */
     public void StopGame(){
-        setGameState(false);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle("Attention");
+
+        alertDialogBuilder
+                .setMessage("Voulez-vous vraiment quitter ?")
+                .setCancelable(false)
+                .setPositiveButton("Oui",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close current Activity
+                        setGameState(false);
+                        GameFunction.this.finish();
+                    }
+                })
+                .setNegativeButton("Non",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog and show it
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
 
 
-    /*  Summary :   Compte à rrebours de 3 secondes avant de démarrer/reprendre la partie
+    /*  Summary :   Compte a rebours de 3 secondes avant de démarrer/reprendre la partie
     *   Param. :    Nothing
     *   Returns:    Nothing
     *   Exception : -
@@ -122,21 +151,20 @@ public class GameFunction extends OptionView {
     */
     public void gameLoop() {
 
+        CreateBrick();
+
         // La piece "next" devient la piece en cours
         currentBrick = nextBrick;
-
-        // On lance la brique sur la grille
-        launchNewBrick(currentBrick);
 
         // On cree une nouvelle piece
         CreateBrick();
 
-        //
-        nextBrick.newBrick();
+        // On lance la brique sur la grille
+        gameView.launchNewBrick(currentBrick);
 
         do {
             currentBrick.Positionning(0);
-            // TODO: if interaction avec le fragment
+            gameView.updateBricks(currentBrick);
 
         } while (canBrickGoDown() && GameIsRunning);
 
@@ -170,29 +198,9 @@ public class GameFunction extends OptionView {
     public void CreateBrick(){
 
         nextBrick = new Brick() { };
-
+        nextBrick.newBrick();
 
     }
-
-
-    /*  Summary :   Lance la piece sur la grille de jeu en recuperant les coordonnees de la piece
-    *               afin de faire changer la couleur des cases
-    *   Param. :    la brique a afficher sur la grille
-    *   Returns:    nothing
-    *   Exception : -
-    */
-    public void launchNewBrick(Brick brick){
-
-        position = brick.coordBrick;
-        int coordX = brick.getCoordX();
-        int coordY = brick.getCoordY();
-
-        for (int x = 0; x < position.length; x++){
-
-            gameGridFragment.ArrayButton[coordX + position[x][0]] [coordY + position[x][1]]
-                    .setBackgroundResource(brick.brickBackground);
-        }
-    } // launchNewBrick
 
 
     /*  Summary :   Contrôle de la grille pour voir s'il faut éliminer des lignes
@@ -244,7 +252,5 @@ public class GameFunction extends OptionView {
 */
         return GameSounds;
     } // checkOptions
-
-
 
 }

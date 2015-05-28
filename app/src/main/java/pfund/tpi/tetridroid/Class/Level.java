@@ -14,7 +14,7 @@ public class Level {
     private int NbLineToReach = 5;
     private int NbLine = 0;
     private double Speed = 1.0;
-    private double delayBeforeGetDown = 1000;
+    private int delayBeforeGetDown = 1000;
     private int Score = 0;
 
     // Score points
@@ -35,7 +35,7 @@ public class Level {
 
     public void SetSpeed(double speed){
         Speed = speed;
-        delayBeforeGetDown = 1000/Speed;
+        delayBeforeGetDown = (int) (1000/Speed);
     }
 
     public int getLevel() {
@@ -46,7 +46,7 @@ public class Level {
         return NbLine;
     }
 
-    public double getSpeed(){
+    public int getSpeed(){
         return delayBeforeGetDown;
     }
 
@@ -71,10 +71,10 @@ public class Level {
     *   Returns:    Nouvelle vitesse
     *   Exception : -
     */
-    public double SpeedUp(double SpeedToChange) {
+    public int SpeedUp(int SpeedToChange) {
 
         SpeedToChange += SpeedToAdd;
-        delayBeforeGetDown = 1/SpeedToChange;
+        delayBeforeGetDown = (int) 1/SpeedToChange;
 
         return SpeedToChange;
     }

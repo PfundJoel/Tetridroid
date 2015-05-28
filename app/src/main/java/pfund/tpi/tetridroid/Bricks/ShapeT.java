@@ -1,7 +1,5 @@
 package pfund.tpi.tetridroid.Bricks;
 
-import android.graphics.Color;
-
 import pfund.tpi.tetridroid.R;
 
 /**
@@ -14,12 +12,11 @@ import pfund.tpi.tetridroid.R;
 public class ShapeT extends Brick{
 
     public ShapeT(){
-        super(5, 1);
 
-        this.coordBrick[0][0] = -1;        this.coordBrick[0][1] = 0;
-        this.coordBrick[1][0] = 0;        this.coordBrick[1][1] = -1;
-        this.coordBrick[2][0] = 0;        this.coordBrick[2][1] = 0;
-        this.coordBrick[3][0] = 1;        this.coordBrick[3][1] = 0;
+        this.coordBrick[0][0] = getCoordX()  -1;        this.coordBrick[0][1] = getCoordY() + 0;
+        this.coordBrick[1][0] = getCoordX() + 0;        this.coordBrick[1][1] = getCoordY()  -1;
+        this.coordBrick[2][0] = getCoordX() + 0;        this.coordBrick[2][1] = getCoordY() + 0;
+        this.coordBrick[3][0] = getCoordX() + 1;        this.coordBrick[3][1] = getCoordY() + 0;
 
         brickBackground = R.drawable.bugdroidviolet;
     }

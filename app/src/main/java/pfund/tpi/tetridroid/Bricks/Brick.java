@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public abstract class Brick {
 
-    public int[][] coordBrick = new int[3][];
+    public int[][] coordBrick = new int[4][2];
 
     private int coordX = 5;
     private int coordY = 1;
@@ -25,11 +25,11 @@ public abstract class Brick {
     }
 
     public void setCoordX(int CoordX){
-        coordX = CoordX;
+        this.coordX = CoordX;
     }
 
     public void setCoordY(int CoordY){
-        coordX = CoordY;
+        this.coordY = CoordY;
     }
 
     public int brickBackground;
@@ -52,6 +52,9 @@ public abstract class Brick {
     public Brick newBrick(){
 
         int nextBrick = random.nextInt(6);
+
+        System.out.println(getCoordX());
+        System.out.println(getCoordY());
 
         switch (nextBrick){
             case 0:
