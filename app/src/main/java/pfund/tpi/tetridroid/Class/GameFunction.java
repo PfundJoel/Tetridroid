@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 
+import java.util.Timer;
+
 import pfund.tpi.tetridroid.Activity.GameView;
 import pfund.tpi.tetridroid.Activity.OptionView;
 import pfund.tpi.tetridroid.Bricks.Brick;
@@ -151,42 +153,37 @@ public class GameFunction extends OptionView {
     */
     public void gameLoop() {
 
-        CreateBrick();
+        nextBrick = CreateBrick();
+
+        System.out.println("nextBrickCoord avant de devenir current : " + nextBrick.coordBrick[0][0] +" "+ nextBrick.coordBrick[0][1]);
 
         // La piece "next" devient la piece en cours
         currentBrick = nextBrick;
 
+        System.out.println("CurrentBrickCoord. coord prisent à current : " + currentBrick.coordBrick[0][0] +" "+ currentBrick.coordBrick[0][1]);
+
         // On cree une nouvelle piece
         CreateBrick();
 
+        System.out.println("nouvelle nextBrickCoord: " + nextBrick.coordBrick[0][0] +" "+ nextBrick.coordBrick[0][1]);
         // On lance la brique sur la grille
         gameView.launchNewBrick(currentBrick);
 
-        do {
+        do
+        {
+            System.out.println("__--__--_______plop_______--__--__");
             currentBrick.Positionning(0);
             gameView.updateBricks(currentBrick);
 
-        } while (canBrickGoDown() && GameIsRunning);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        } while (/*gameView.canBrickGoDown(currentBrick) &&*/ GameIsRunning);
 
     } // gameLoop
-
-
-    /*  Summary :   Controle si la piece est arrivee contre un obstacle.
-    *   Param. :    -
-    *   Returns:    Booleen : true si la piece peut descendre / False si elle est bloquee
-    *   Exception : -
-    */
-    public boolean canBrickGoDown(){
-        int x = currentBrick.getCoordX();
-        int y = currentBrick.getCoordY();
-
-        for(int i = 0; i < currentBrick.coordBrick.length; i++) {
-            if (gameGridFragment.ArrayButton[x + currentBrick.coordBrick[i][0]+1][y + currentBrick.coordBrick[i][1]].getBackground() == getResources().getDrawable(R.drawable.square)){
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     /*  Summary :   Creer une nouvelle piece
@@ -195,10 +192,13 @@ public class GameFunction extends OptionView {
     *   Returns:    nothing
     *   Exception : -
     */
-    public void CreateBrick(){
+    public Brick CreateBrick(){
 
-        nextBrick = new Brick() { };
-        nextBrick.newBrick();
+        Brick brick = new Brick() { };
+        brick = brick.newBrick();
+
+        System.out.println("brick just created "+ brick.coordBrick[0][0]);
+        return brick;
 
     }
 

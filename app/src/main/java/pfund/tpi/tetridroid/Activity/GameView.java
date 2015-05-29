@@ -19,7 +19,7 @@ import pfund.tpi.tetridroid.R;
  * Description : Classe qui gere l'affichage du jeu et des interactions entre
  *               les differentes activites et Fragments
  * Createur :    Joel Pfund
- * Cr éé le :     08.05.2015
+ * Créé le :     08.05.2015
  * Modifié le :  08.05.2015
  */
 
@@ -54,32 +54,39 @@ public class GameView extends ActionBarActivity
                         }
                     });
 
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                } // while true
+
             } // run the gameLoop
         });
         gameThread.start();
     }
 
+
+    /*  Summary :   Met a jour le plateau de jeu f
+    *   Param. :    la brique a afficher sur la grille
+    *   Returns:    nothing
+    *   Exception : -
+    */
     public void updateBricks(Brick brick){
         gameGridFragment = (GameGridFragment) getFragmentManager().findFragmentById(R.id.FragmentGameGrid);
 
+        System.out.println("_________UpdateBrick__________");
+
+        for (int i = 0; i < brick.coordBrick.length; i++){
+            gameGridFragment.ArrayButton[brick.coordBrick[i][0]][brick.coordBrick[i][1]].setBackgroundResource(brick.brickBackground);
+        }
+
         Button button = new Button(getApplicationContext());
-        button.setBackgroundResource(R.drawable.bugdroidyellow);
+        button.setBackgroundResource(brick.brickBackground);
         gameGridFragment.setViewParams(button);
 
-        System.out.println("TEST !!! ");
+        gameGridFragment.gridLayout.removeAllViews();
 
-        try {
-            gameGridFragment.gridLayout.removeViewAt(10);
-            gameGridFragment.gridLayout.addView(button);
-        }
-        catch(Exception e){
-            System.err.println("Error "+e);
+        for (int x = 0 ; x < gameGridFragment.ArrayButton.length ; x++){
+            for (int y = 0 ; y < gameGridFragment.ArrayButton[0].length ; y++){
+
+                gameGridFragment.gridLayout.addView(gameGridFragment.ArrayButton[x][y]);
+            }
         }
     }
 
@@ -98,12 +105,33 @@ public class GameView extends ActionBarActivity
 
         for (int i = 0; i < position.length; i++){
 
-            System.out.println(brick.coordBrick[i][0]);
-            System.out.println(brick.coordBrick[i][1]);
+            System.out.println("LaunchNewBrick ----------------");
 
             gameGridFragment.ArrayButton[position[i][0]][position[i][1]].setBackgroundResource(brick.brickBackground);
         }
     } // launchNewBrick
+
+
+    /*  Summary :   Controle si la piece est arrivee contre un obstacle.
+    *   Param. :    -
+    *   Returns:    Booleen : true si la piece peut descendre / False si elle est bloquee
+    *   Exception : -
+    */
+    public boolean canBrickGoDown(Brick brick){
+        System.out.println("canBrickGoDown -----------------");
+
+        for(int i = 0; i < brick.coordBrick.length; i++) {
+
+            System.out.println(brick.coordBrick[i][0] +" "+brick.coordBrick[i][1]);
+
+            if (brick.coordBrick[i][0] == gameGridFragment.ArrayButton.length){
+                return false;
+            } else if (gameGridFragment.ArrayButton[brick.coordBrick[i][0]+1][brick.coordBrick[i][1]].getBackground() == getResources().getDrawable(R.drawable.square)){
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     public void onFragmentInteraction(Uri uri) { } // onFragmentInteraction
@@ -123,6 +151,7 @@ public class GameView extends ActionBarActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent Activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement

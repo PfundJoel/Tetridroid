@@ -27,7 +27,6 @@ public abstract class Brick {
     public void setCoordX(int CoordX){
         this.coordX = CoordX;
     }
-
     public void setCoordY(int CoordY){
         this.coordY = CoordY;
     }
@@ -37,6 +36,7 @@ public abstract class Brick {
     public Brick(int x , int y) {
         this.coordX = x;
         this.coordY = y;
+
     }
 
     // Constructeur vide
@@ -53,24 +53,25 @@ public abstract class Brick {
 
         int nextBrick = random.nextInt(6);
 
+        System.out.println("newBrick, initialisation de la shape-----------------");
         System.out.println(getCoordX());
         System.out.println(getCoordY());
 
         switch (nextBrick){
             case 0:
-                return new ShapeI();
+                return new ShapeI(){};
             case 1:
-                return new ShapeJ();
+                return new ShapeJ(){};
             case 2:
-                return new ShapeL();
+                return new ShapeL(){};
             case 3:
-                return new ShapeO();
+                return new ShapeO(){};
             case 4:
-                return new ShapeS();
+                return new ShapeS(){};
             case 5:
-                return new ShapeT();
+                return new ShapeT(){};
             default:
-                return new ShapeZ();
+                return new ShapeZ(){};
         }
     } // newBrick
 
@@ -100,11 +101,11 @@ public abstract class Brick {
     } // Positionning
 
 
-   /*  Summary :   Tourne la piece dans le sens contraire des aiguilles d'une montre
-   *   Param. :    La forme a faire tourner et le sens dans lequel elle est actuellement
-   *   Returns:    Nothing
-   *   Exception : -
-   */
+    /*  Summary :   Tourne la piece dans le sens contraire des aiguilles d'une montre
+    *   Param. :    La forme a faire tourner et le sens dans lequel elle est actuellement
+    *   Returns:    Nothing
+    *   Exception : -
+    */
     public void turnLeft(char shape, int form){
 
         switch (shape) {
@@ -321,10 +322,10 @@ public abstract class Brick {
 
 
     /*  Summary :   Tourne la piece dans le sens des aiguilles d'une montre
-   *   Param. :    La forme a faire tourner et le sens dans lequel elle est actuellement
-   *   Returns:    Nothing
-   *   Exception : -
-   */
+    *   Param. :    La forme a faire tourner et le sens dans lequel elle est actuellement
+    *   Returns:    Nothing
+    *   Exception : -
+    */
     public void turnRight(char shape, int form){
 
         switch (shape) {

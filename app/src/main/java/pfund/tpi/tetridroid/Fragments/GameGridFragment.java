@@ -303,20 +303,11 @@ public class GameGridFragment extends Fragment {
 
         int Margin = 1;
 
-        ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
+        //ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
 
-        System.out.println(ScreenHeight + " " + GridHeight);
-        System.out.println(ButtonParams.toString());
-
-        ButtonParams.height = (ScreenHeight*3/4 ) / GridHeight;
-        ButtonParams.width = ButtonParams.height;
-        ButtonParams.setMargins(Margin, Margin, Margin, Margin);
-
-        button.setLayoutParams(ButtonParams);
-
-
-
-
+        int size = (ScreenHeight*3/4) / GridHeight;
+        button.setHeight(size);
+        button.setWidth(size);
 
     } // SetViewParams
 
@@ -333,9 +324,6 @@ public class GameGridFragment extends Fragment {
         display.getSize(size);
         ScreenWidth = size.x;
         ScreenHeight = size.y;
-
-        System.out.println(ScreenWidth);
-        System.out.println(ScreenHeight);
 
     } // getScreenSize
 
