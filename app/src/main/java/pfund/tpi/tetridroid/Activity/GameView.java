@@ -181,4 +181,8 @@ public class GameView extends ActionBarActivity
         super.onPause();
 
     }
+
+    protected void plop(){
+        // prout
+    }
 }
