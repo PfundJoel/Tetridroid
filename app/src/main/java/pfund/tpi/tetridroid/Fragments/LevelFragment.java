@@ -12,8 +12,7 @@ import pfund.tpi.tetridroid.R;
 
 /**
  * Titre :       LevelFragment
- * Description : Classe qui gere l'affichage du fragment qui gere les niveaux et les lignes
- *               supprimees et a supprimer pour atteindre le prochain niveau
+ * Description : Manage the fragment's view who show the level, line and number of line to reach before change level
  * Créateur :    Joël Pfund
  * Créé le :     11.05.2015
  * Modifié le :  13.05.2015
@@ -22,18 +21,13 @@ public class LevelFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of this fragment
-     */
     public static LevelFragment newInstance() {
         LevelFragment fragment = new LevelFragment();
 
         return fragment;
     }
 
-    public LevelFragment() {
-        // Required empty public constructor
-    }
+    public LevelFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,13 +76,8 @@ public class LevelFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the Activity and potentially other Fragments contained in that
      * Activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 

@@ -23,7 +23,7 @@
     <string name="backToMenu">Retour</string>
 
     <string name="serverDescription">Créer une partie afin que quelqu\'un vous rejoigne pour jouer contre vous...</string>
-    <string name="clientDescription">Rejoindre une partie que quelqu\'un d\'autre a créer</string>
+    <string name="clientDescription">Rejoindre une partie que quelqu\'un d\'autre a créé</string>
     <string name="backToMenuDescription">Retourner au menu principal de l\'application</string>
     <string name="title_activity_versus">VersusActivity</string>
 

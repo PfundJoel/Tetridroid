@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 /*
  * Titre :       NetworkConnectionServer
- * Description : Gere les connections au reseau WiFi afin de pouvoir jouer en mode Versus
+ * Description : Manage the WiFi connections  for create a party in Versus mode
  * Créateur :    Joël Pfund
  * Créé le :     24.05.2015
  * Modifié le :  25.05.2015
@@ -52,6 +52,12 @@ public class NetworkConnectionServer extends Activity {
         super.onDestroy();
     }
 
+
+    /*  Summary :   Set informations for the connection
+    *   Param. :    Application's port number
+    *   Returns:    Nothing
+    *   Exception : -
+    */
     public void registerService(int port) {
         NsdServiceInfo serviceInfo = new NsdServiceInfo();
         serviceInfo.setServiceName(SERVICE_NAME);
@@ -63,6 +69,12 @@ public class NetworkConnectionServer extends Activity {
                 mRegistrationListener);
     }
 
+
+    /*  Summary :   Create a RegisttationListener to look if people around joins the party and manage error
+    *   Param. :    Nothing
+    *   Returns:    NsdManager with connection infos
+    *   Exception : -
+    */
     NsdManager.RegistrationListener mRegistrationListener = new NsdManager.RegistrationListener() {
 
         @Override

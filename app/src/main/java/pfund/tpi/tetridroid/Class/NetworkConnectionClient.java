@@ -10,10 +10,10 @@ import java.net.InetAddress;
 
 /*
  * Titre :       NetworkConnectionClient
- * Description : Gere les connections au reseau WiFi afin de pouvoir rejoindre des joueurs en mode Versus
- * Créateur :    Joël Pfund
+ * Description : Manage wifi connections jor join other gamer in versus mode
+ * Créateur :    Joel Pfund
  * Créé le :     25.05.2015
- * Modifié le :  25.05.2015
+ * Modifié le :  27.05.2015
  */
 public class NetworkConnectionClient extends Activity {
     private String SERVICE_NAME = "Tetridroid";
@@ -62,9 +62,14 @@ public class NetworkConnectionClient extends Activity {
     }
 
 
+    /*  Summary :   Create a DiscoveryListener to look if people around use same application for join a party
+    *               and manage error
+    *   Param. :    Nothing
+    *   Returns:    NsdManager with connection infos
+    *   Exception : -
+    */
     NsdManager.DiscoveryListener mDiscoveryListener = new NsdManager.DiscoveryListener() {
 
-        // Called as soon as service discovery begins.
         @Override
         public void onDiscoveryStarted(String regType) {
             System.out.println("Service discovery started");
@@ -72,7 +77,7 @@ public class NetworkConnectionClient extends Activity {
 
         @Override
         public void onServiceFound(NsdServiceInfo service) {
-            // A service was found! Do something with it.
+
             System.out.println( "Service discovery success : " + service);
             System.out.println("Host = " + service.getServiceName());
             System.out.println("port = " + String.valueOf(service.getPort()));
@@ -117,6 +122,13 @@ public class NetworkConnectionClient extends Activity {
         }
     };
 
+
+    /*  Summary :   Create a ResolveListener to look if connection is established for set  host port and ip address
+    *               and manage error
+    *   Param. :    Nothing
+    *   Returns:    NsdManager with host infos
+    *   Exception : -
+    */
     NsdManager.ResolveListener mResolveListener = new NsdManager.ResolveListener() {
 
         @Override

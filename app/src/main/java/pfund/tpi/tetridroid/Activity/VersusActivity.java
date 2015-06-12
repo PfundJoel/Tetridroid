@@ -6,11 +6,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import pfund.tpi.tetridroid.Fragments.GameGridFragment;
+import pfund.tpi.tetridroid.Fragments.LevelFragment;
 import pfund.tpi.tetridroid.Fragments.OpponentFragment;
+import pfund.tpi.tetridroid.Fragments.ScoreFragment;
 import pfund.tpi.tetridroid.R;
 
+/*
+    Title :       VersusActivity
+    Summary :     Class that contains the activity in Versus mode
+    Creator :     Joel Pfund
+    Created :     24.04.2015
+    Modified :    27.05.2015
+ */
 public class VersusActivity extends ActionBarActivity
-        implements OpponentFragment.OnFragmentInteractionListener{
+         implements OpponentFragment.OnFragmentInteractionListener,
+                    GameGridFragment.OnFragmentInteractionListener,
+                    LevelFragment.OnFragmentInteractionListener,
+                    ScoreFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

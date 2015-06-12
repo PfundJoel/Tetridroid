@@ -1,6 +1,7 @@
 package pfund.tpi.tetridroid.Fragments;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -25,10 +26,10 @@ import pfund.tpi.tetridroid.R;
 
 /**
  * Titre :       GameGridFragment
- * Description : Classe qui gere le fragment de la grille de jeu qui s'affiche dans l'activite du jeu
+ * Description : Class that manage the fragment where the grid is shown with the "next brick" and the "held brick"
  * Createur :    Joel Pfund
  * Cree le :     08.05.2015
- * Modifie le :  11.05.2015
+ * Modifie le :  30.05.2015
  */
 public class GameGridFragment extends Fragment {
 
@@ -48,22 +49,17 @@ public class GameGridFragment extends Fragment {
         return ArrayButton;
     }
 
-    // Instanciation d'un nouveau fragment
     public static GameGridFragment newInstance() {
         GameGridFragment fragment = new GameGridFragment();
-
         return fragment;
-    }
+    } // newInstance
 
-    public GameGridFragment() {
-        // Required empty public constructor
-    }
+    public GameGridFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-    }
+    } // onCreate
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,20 +77,16 @@ public class GameGridFragment extends Fragment {
         holdBrickView.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
 
             public boolean onTouch(View v, MotionEvent event) {
-
                 return gestureDetector.onTouchEvent(event);
             }
-
         });
 
         gridLayout = (GridLayout) v.findViewById(R.id.myGridLayout);
 
-        // Remplissage de la grille de jeu avec les boutons de base
+        // Put the empty button in the grid
         for(int x = 0; x < GridHeight; x++) {
             for(int y = 0; y < GridWidth; y++) {
-
                 ArrayButton[x][y] = new Button(getActivity());
-
                 ArrayButton[x][y].setBackgroundResource(R.drawable.square);
 
                 gridLayout.addView(ArrayButton[x][y]);
@@ -105,47 +97,38 @@ public class GameGridFragment extends Fragment {
 
         gridLayout.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
 
-            public void onSwipeTop() {
-                Toast.makeText(getActivity(), "haut", Toast.LENGTH_SHORT).show();
-            }
-
+            public void onSwipeTop() { /* Nothing to do */ }
             public void onSwipeRight() {
                 Toast.makeText(getActivity(), "droite", Toast.LENGTH_SHORT).show();
+                // TODO Brick doit aller a droite
             }
-
             public void onSwipeLeft() {
                 Toast.makeText(getActivity(), "gauche", Toast.LENGTH_SHORT).show();
             }
-
             public void onSwipeBottom() {
                 Toast.makeText(getActivity(), "bas", Toast.LENGTH_SHORT).show();
             }
-
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
             }
         });
         return v;
-    }
+    } // onCreateView
 
-    /*  Summary :   Controle de la grille de jeu pour chercher si des lignes sont completes
+
+    /*  Summary :   Check the game grid for see if one or some line are full
     *   Param. :    Nothing
     *   Returns:    Nothing
     *   Exception : -
     */
-    // TODO : Pour la suite, chercher uniquement dans les lignes ou des pieces tombent quand ca sera fait => Economie de ressources & temps
     public void CheckLine(){
 
-        int Counter = 0;
-        ColorDrawable buttonColor;
-
         for (int LineNumber = 0; LineNumber < GridHeight; LineNumber++) {
+            int Counter = 0;
             for (int y = 0; y < GridWidth; y++) {
-
-                if (((ColorDrawable) ArrayButton[LineNumber][y].getBackground()).getColor() != Color.TRANSPARENT) {
+                if (ArrayButton[LineNumber][y].getBackground().equals(R.drawable.square)) {
                     Counter++;
                 }
-
                 if (Counter == GridWidth) {
                     DeleteLine(LineNumber);
                 }
@@ -153,51 +136,46 @@ public class GameGridFragment extends Fragment {
         }
     } //CheckLine
 
-    /*  Summary :   Effacer la ligne et faire descendre les pieces du dessus
-    *   Param. :    Numero de la ligne a supprimer
+
+    /*  Summary :   Delete the line and make fall the line who are upper than the deleted line
+    *   Param. :    Number of the line to delete
     *   Returns:    Nothing
     *   Exception : -
     */
     // TODO: A controler pour les lignes multiples a supprimer
     public void DeleteLine(int LineNumber){
-
         ColorDrawable buttonColor;
         int Counter = 0;
 
-        // Bouclie qui decale toutes les lignes vers le bas jusqu'a ce qu'ils n'y aient plus de boutons colores au dessus-d'elles
+        // Loop that makes fall all the line upper than the deleted line. When the counter has same value that the grid width,
+        // it means that there isn't any more thing to make fall
         do {
             Counter = 0;
-
             for (int x = 0; x < GridWidth; x++){
-                if (((ColorDrawable)ArrayButton[LineNumber-1][x].getBackground()).getColor() == Color.TRANSPARENT){
+                if ((ArrayButton[LineNumber-1][x].getBackground()).equals(R.drawable.square)){
                     Counter++;
                 }
-                ArrayButton[LineNumber][x].setBackgroundColor(((ColorDrawable) ArrayButton[LineNumber-1][x].getBackground()).getColor());
+                ArrayButton[LineNumber][x]
+                        .setBackground(ArrayButton[LineNumber - 1][x].getBackground());
             }
-
             LineNumber --;
-
         } while (Counter < GridWidth);
-
     } //DeleteLine
 
-    /*  Summary :   Ajout de ligne(s) au bas de la grille
-    *   Param. :    Nombre de lignes a ajouter
+
+    /*  Summary :   Add the number of line passed in parameter
+    *   Param. :    Number of line to add
     *   Returns:    Nothing
     *   Exception : -
     */
     public void AddLine(int NbLine){
-
         for (int LineNumber = 0; LineNumber < GridHeight; LineNumber++) {
-
             if(LineNumber == GridHeight-1) {
-
                 CreateRandomLine(NbLine);
-            }
-            else{
-
+            } else{
                 for (int y = 0; y < GridWidth; y++) {
-                    ArrayButton[LineNumber][LineNumber].setBackgroundColor(((ColorDrawable) ArrayButton[LineNumber + 1][LineNumber].getBackground()).getColor());
+                    ArrayButton[LineNumber][LineNumber]
+                            .setBackground(ArrayButton[LineNumber + 1][LineNumber].getBackground());
                 }
             }
         }
@@ -210,21 +188,16 @@ public class GameGridFragment extends Fragment {
     *   Exception : -
     */
     public void CreateRandomLine(int NbLineToAdd){
-
         Random random = new Random();
         int LineToDo;
-
         int randomHole = random.nextInt(9);
-
         for (int x = 0; x <= NbLineToAdd; x++){
             for (int y = 0; y < GridWidth; y++) {
-
                 LineToDo = GridHeight-x;
-
                 int randomNumber = random.nextInt(6);
-
                 if (y == randomHole) {
-                    ArrayButton[GridHeight][x].setBackgroundResource(R.drawable.square);
+                    ArrayButton[GridHeight][x]
+                            .setBackgroundResource(R.drawable.square);
                 }
                 else{
                     switch (randomNumber) {
@@ -263,9 +236,7 @@ public class GameGridFragment extends Fragment {
     *   Exception : -
     */
     public Brick createNextBrick(){
-
         Brick nextBrick = createNextBrick();
-
         switch(nextBrick.brickBackground){
             case R.drawable.bugdroidblue:
                 nextBrickView.setBackgroundResource(R.drawable.brickblue);
@@ -290,7 +261,6 @@ public class GameGridFragment extends Fragment {
                 break;
         }
         return nextBrick;
-
     } // createNextBrick
 
 
@@ -300,14 +270,16 @@ public class GameGridFragment extends Fragment {
     *   Exception : -
     */
     public void setViewParams(Button button){
-
         int Margin = 1;
 
-        //ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
+        GridLayout.LayoutParams ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
 
-        int size = (ScreenHeight*3/4) / GridHeight;
-        button.setHeight(size);
-        button.setWidth(size);
+        ButtonParams.height = (ScreenHeight*3/4 ) / GridHeight;
+        ButtonParams.width = ButtonParams.height;
+
+        ButtonParams.setMargins(Margin, Margin, Margin, Margin);
+
+        button.setLayoutParams(ButtonParams);
 
     } // SetViewParams
 
@@ -318,13 +290,11 @@ public class GameGridFragment extends Fragment {
     *   Exception : -
     */
     public void getScreenSize(){
-
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         ScreenWidth = size.x;
         ScreenHeight = size.y;
-
     } // getScreenSize
 
 
@@ -345,34 +315,28 @@ public class GameGridFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-
-    }
+    } // onAttach
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    } // onDetach
 
     @Override
     public void onPause(){
         super.onPause();
-    }
+    } // onPause
+
 
     /**
-     * This interface must be implemented by activities that contain this
+     * Interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the Activity and potentially other Fragments contained in that
      * Activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-    }
-
-
+    } // OnFragmentInteractionListener
 }

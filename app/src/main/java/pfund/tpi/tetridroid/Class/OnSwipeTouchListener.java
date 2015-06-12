@@ -7,8 +7,8 @@ import android.view.View;
 
 /*
  * Titre :       OnSwipeTouchListener
- * Description : Gere les gestes qui sont fait sur l'ecran pour savoir dans quelle direction ils vont
- * Créateur :    Joël Pfund
+ * Description : Manage gesture that we make on the screen for see in which direction they go
+ * Créateur :    Joel Pfund
  * Créé le :     24.05.2015
  * Modifié le :  24.05.2015
  */
@@ -31,9 +31,9 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         private static final int SWIPE_THRESHOLD = 50;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
-        /*  Summary :   des qu'il y a un appui
+        /*  Summary :   when the user press the key
         *   Param. :    event
-        *   Returns:    un booleen si l'user a appuye
+        *   Returns:    a boolean if it's true
         *   Exception : -
         */
         @Override
@@ -41,9 +41,9 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
             return true;
         }
 
-        /*  Summary :
+        /*  Summary :   if there is a movement on the screen with the finger
         *   Param. :    -
-        *   Returns:    booleen
+        *   Returns:    boolean: true when try is okay
         *   Exception : -
         */
         @Override
@@ -75,10 +75,11 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
                 exception.printStackTrace();
             }
             return result;
-        }
+        } // onFling
     }
 
     public void onSwipeRight() {
+
     }
 
     public void onSwipeLeft() {

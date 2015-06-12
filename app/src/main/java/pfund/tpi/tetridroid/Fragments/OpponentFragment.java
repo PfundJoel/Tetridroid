@@ -1,45 +1,42 @@
 package pfund.tpi.tetridroid.Fragments;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 
+import pfund.tpi.tetridroid.Class.OnSwipeTouchListener;
 import pfund.tpi.tetridroid.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OpponentFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link OpponentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OpponentFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    private int ScreenWidth, ScreenHeight;
+    private int GridWidth = 10;
+    private int GridHeight = 23;
+    public Button[][] ArrayButton;
+    public GridLayout gridLayout;
+    private ImageView nextBrickView;
+    private ImageView holdBrickView;
+
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OpponentFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static OpponentFragment newInstance(String param1, String param2) {
         OpponentFragment fragment = new OpponentFragment();
         Bundle args = new Bundle();
@@ -49,9 +46,9 @@ public class OpponentFragment extends Fragment {
         return fragment;
     }
 
-    public OpponentFragment() {
-        // Required empty public constructor
-    }
+
+    public OpponentFragment() { }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,21 +57,45 @@ public class OpponentFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
+    } // onCreate
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_opponent, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        View v = inflater.inflate(R.layout.fragment_opponent, container, false);
+
+        ArrayButton = new Button[GridHeight][GridWidth];
+
+        getScreenSize();
+
+        nextBrickView = (ImageView) v.findViewById(R.id.BrickNext);
+        holdBrickView = (ImageView) v.findViewById(R.id.BrickHold);
+
+        holdBrickView.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
+        gridLayout = (GridLayout) v.findViewById(R.id.myGridLayout);
+
+        // Put the basic button in the grid
+        for(int x = 0; x < GridHeight; x++) {
+            for(int y = 0; y < GridWidth; y++) {
+                ArrayButton[x][y] = new Button(getActivity());
+                ArrayButton[x][y].setBackgroundResource(R.drawable.square);
+
+                gridLayout.addView(ArrayButton[x][y]);
+
+                setViewParams(ArrayButton[x][y]);
+            }
         }
-    }
+    return v;
+    } // onCreateView
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -85,26 +106,56 @@ public class OpponentFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    } // onAttach
+
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    } // onDetach
+
+
+    /*  Summary :   Set the game grid button size
+    *   Param. :    Button that we have to set the size
+    *   Returns:    Nothing
+    *   Exception : -
+    */
+    public void setViewParams(Button button){
+        int Margin = 1;
+
+        GridLayout.LayoutParams ButtonParams = (GridLayout.LayoutParams) button.getLayoutParams();
+
+        ButtonParams.height = (ScreenHeight/2 ) / GridHeight;
+        ButtonParams.width = ButtonParams.height;
+
+        ButtonParams.setMargins(Margin, Margin, Margin, Margin);
+
+        button.setLayoutParams(ButtonParams);
+    } // SetViewParams
+
+
+    /*  Summary :   Set the game grid size
+    *   Param. :    Nothing
+    *   Returns:    Nothing
+    *   Exception : -
+    */
+    public void getScreenSize(){
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        ScreenWidth = size.x;
+        ScreenHeight = size.y;
+    } // getScreenSize
+
 
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the Activity and potentially other Fragments contained in that
      * Activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 

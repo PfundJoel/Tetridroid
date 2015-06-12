@@ -4,17 +4,17 @@ import java.util.Random;
 
 
 /*
- * Titre :       Brick
- * Description : Classe qui gere les pièces du jeu, les fait tourner/se deplacer, s'arreter
- * Créateur :    Joël Pfund
- * Créé le :     30.04.2015
- * Modifié le :  24.05.2015
+ * Title :       Brick
+ * Description : Abstract that will manage the game pieces. It makes it turn, going down or stop
+ * Creator :     Joel Pfund
+ * Created :     30.04.2015
+ * Modified :    30.05.2015
  */
 public abstract class Brick {
 
     public int[][] coordBrick = new int[4][2];
 
-    private int coordX = 5;
+    private int coordX = 4;
     private int coordY = 1;
 
     public int getCoordX(){
@@ -44,18 +44,16 @@ public abstract class Brick {
 
     private Random random = new Random();
 
-   /*  Summary :   Creer une nouvelle brique a mettre dans la case nextBrick puis a faire apparaitre sur le jeu
-   *   Param. :    -
-   *   Returns:    Une piece qui a une image de fond (couleur) et des coordonnees pour ses elements
-   *   Exception : -
-   */
+    /*  Summary :   Create a new brick with a shape
+    *   Param. :    -
+    *   Returns:    A brick to put on the game grid with a shape, a background and coordonates
+    *   Exception : -
+    */
     public Brick newBrick(){
 
         int nextBrick = random.nextInt(6);
 
-        System.out.println("newBrick, initialisation de la shape-----------------");
-        System.out.println(getCoordX());
-        System.out.println(getCoordY());
+        System.out.println("newBrick, initialisation de la shape");
 
         switch (nextBrick){
             case 0:
@@ -76,14 +74,14 @@ public abstract class Brick {
     } // newBrick
 
 
-   /*  Summary :   Deplace la brique en fonction de l'ordre qui lui est envoye.
-                    -1 => vers la gauche
-                    0  => vers le bas
-                    +1 => vers la droite
-   *   Param. :    La direction dans laquelle deplacer la forme
-   *   Returns:    Nothing
-   *   Exception : -
-   */
+    /*  Summary :   Move the brick in a direction who depends of the arg.
+                     -1 = to the left
+                      0 =  down
+                      1 = to the right
+    *   Param. :    An int for the direction
+    *   Returns:    Nothing
+    *   Exception : -
+    */
     public void Positionning(int move) {
         if (move == -1){
             for(int i = 0; i < coordBrick.length; i++) {
@@ -101,8 +99,8 @@ public abstract class Brick {
     } // Positionning
 
 
-    /*  Summary :   Tourne la piece dans le sens contraire des aiguilles d'une montre
-    *   Param. :    La forme a faire tourner et le sens dans lequel elle est actuellement
+    /*  Summary :   Turn the brick on the left
+    *   Param. :    The shape to make turn and the "state" of the shape
     *   Returns:    Nothing
     *   Exception : -
     */
@@ -321,8 +319,9 @@ public abstract class Brick {
     }// turnLeft
 
 
-    /*  Summary :   Tourne la piece dans le sens des aiguilles d'une montre
-    *   Param. :    La forme a faire tourner et le sens dans lequel elle est actuellement
+
+    /*  Summary :   Turn the brick on the right
+    *   Param. :    The shape to make turn and the "state" of the shape
     *   Returns:    Nothing
     *   Exception : -
     */

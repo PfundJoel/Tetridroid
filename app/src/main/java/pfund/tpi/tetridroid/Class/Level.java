@@ -1,7 +1,11 @@
 package pfund.tpi.tetridroid.Class;
 
 /**
- * Created by pfundjo on 04.05.2015.
+ * Title :       Level
+ * Description : Class that manage the points, lines and level of the game
+ * Author :      Joel Pfund
+ * Created :     04.05.2015
+ * Modified :    27.05.2015
  */
 public class Level {
 
@@ -50,10 +54,11 @@ public class Level {
         return delayBeforeGetDown;
     }
 
-    /*  Summary :   Change le nombre de lignes à atteindre (s'il n'est pas déjà à la limite fixée)
-    *               avant d'atteindre le prochain niveau
-    *   Param. :    Nouveau niveau du joueur
-    *   Returns:    Nombre de lignes à atteindre pour le prochain niveau
+
+    /*  Summary :   Change the number of linento reach if it's not already to the fixed limit
+    *               for change level
+    *   Param. :    New gamer's level
+    *   Returns:    New number of line to reach for next level
     *   Exception : -
     */
     public int ChangeLineToReach(int level){
@@ -64,11 +69,12 @@ public class Level {
         }
 
         return NbLineToReach;
-    }
+    } // ChangeLineToReach
 
-    /*  Summary :   Augmente la vitesse de descente des pièces
-    *   Param. :    Vitesse en cours à augmenter
-    *   Returns:    Nouvelle vitesse
+
+    /*  Summary :   Increase the brick's speed
+    *   Param. :    Current speed
+    *   Returns:    New speed
     *   Exception : -
     */
     public int SpeedUp(int SpeedToChange) {
@@ -77,10 +83,11 @@ public class Level {
         delayBeforeGetDown = (int) 1/SpeedToChange;
 
         return SpeedToChange;
-    }
+    } // SpeedUp
 
-    /*  Summary :   Ajoute les points au score actuel
-    *   Param. :    Points à ajouter
+
+    /*  Summary :   Add points to current score
+    *   Param. :    Points to add
     *   Returns:    Nothing
     *   Exception : -
     */

@@ -28,7 +28,7 @@
                 android:layout_height="50sp"
                 android:background="@drawable/brickblue"
                 android:layout_marginTop="10sp"
-                android:layout_marginLeft="15sp" />
+                android:layout_marginLeft="10sp" />
 
         </RelativeLayout>
 
@@ -40,7 +40,7 @@
             android:columnCount="10"
             android:rowCount="23"
             android:orientation="horizontal"
-            android:background="#ff9f9f9f">
+            android:background="#ffbebebe">
         </GridLayout>
 
         <RelativeLayout
@@ -58,11 +58,9 @@
                 android:layout_width="70sp"
                 android:layout_height="50sp"
                 android:background="@drawable/brickred"
-                android:layout_marginLeft="15sp"
+                android:layout_marginLeft="10sp"
                 android:layout_marginTop="10sp" />
 
         </RelativeLayout>
-
     </LinearLayout>
-
 </FrameLayout>

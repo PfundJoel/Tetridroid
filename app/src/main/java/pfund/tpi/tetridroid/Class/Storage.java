@@ -7,8 +7,7 @@ import pfund.tpi.tetridroid.Activity.MenuActivity;
 
 /**
  * Title :       Storage
- * Description : Classe qui gère le stockage et la recuperation des informations pour le jeu
- *               (musique, son, briques lorsqu on quitte le jeu et qu on le reprend
+ * Description : Class that store game informations and allow to take them back (Music, sound and game state)
  * Author :      Joël Pfund
  * Created :     20.04.2015
  * Modified :    21.05.2015

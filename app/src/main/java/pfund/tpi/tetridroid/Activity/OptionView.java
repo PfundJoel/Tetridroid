@@ -14,6 +14,13 @@ import pfund.tpi.tetridroid.R;
 import pfund.tpi.tetridroid.Class.Storage;
 
 
+/*
+    Title :       OptionView
+    Summary :     Class that contains the option of the game (sounds and music)
+    Creator :     Joel Pfund
+    Created :     24.04.2015
+    Modified :    27.05.2015
+ */
 public class OptionView extends Storage {
 
     public static final String PREFS_OPTIONS = "Tetridroid";
@@ -43,19 +50,18 @@ public class OptionView extends Storage {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_view);
 
+        // Import SharedPreferences for see if if the app has to activate sound and / or music
         PlayerProfile = getSharedPreferences(PREFS_OPTIONS, 0);
-
-        // Importe les SharedPreferences où sont stockés les préférences musique et son
 
         OptionListView = (ListView) findViewById(R.id.listviewsettings);
 
-        // Liste qui contiendra les éléments de la ListView du menu
+        // List who'll contain the ListView elements for the menu
         ArrayList<HashMap<String, String>> listMenu = new ArrayList<HashMap<String, String>>();
 
         HashMap<String, String> map;
 
         map = new HashMap<String, String>();
-        // Entrer les données qu'on récupérera dans la textview
+        // Enter the data that we'll take back for the TextView
         map.put(TextMenu, Music);
         if (PlayerProfile.getString(SP_Music, "").isEmpty()){
             map.put(Value, strOn);
@@ -65,11 +71,12 @@ public class OptionView extends Storage {
             map.put(Value, PlayerProfile.getString(SP_Music, ""));
         }
 
-        // Ajouter  la HashMap dans le ArrayList
+        // Add the HashMap in the ArrayList
         listMenu.add(map);
 
         map = new HashMap<String, String>();
-        // Entrer les données qu'on récupérera dans la textview
+
+        // Enter the data that we'll take back for put into the textView
         map.put(TextMenu, Sound);
         if (PlayerProfile.getString(SP_Sound, "").isEmpty()){
             map.put(Value, strOn);
@@ -79,10 +86,10 @@ public class OptionView extends Storage {
             map.put(Value, PlayerProfile.getString(SP_Sound, ""));
         }
 
-        // Ajouter  la HashMap dans le ArrayList
+        // Add the HashMap in the ArrayList
         listMenu.add(map);
 
-        //Création d'un SimpleAdapter va introduire les éléments  de listMenu dans la view affichageoption
+        // Create a simple adapter who'll introduce the element of ListMenu in the OptionView
         final SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(),
                 listMenu, R.layout.option_menu_view,
                 new String[] {TextMenu, Value},
@@ -90,13 +97,12 @@ public class OptionView extends Storage {
 
         OptionListView.setAdapter(mSchedule);
 
-
-        //On met un écouteur d'évènement sur notre listView
+        // Put an event listener on the list view
         OptionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> adapt, View view, int position, long id) {
-                //on récupère la HashMap
+
                 HashMap<String, String> map = (HashMap<String, String>) OptionListView.getItemAtPosition(position);
                 if (map.get(TextMenu) == Music) {
 
@@ -120,5 +126,6 @@ public class OptionView extends Storage {
             }
         });
     } // onCreate
+
 
 }

@@ -1,6 +1,7 @@
 package pfund.tpi.tetridroid.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
@@ -13,10 +14,18 @@ import pfund.tpi.tetridroid.Class.NetworkConnectionServer;
 import pfund.tpi.tetridroid.R;
 
 
+/*
+    Title :       VersusActivityMenu
+    Summary :     Class that contains the activity in Versus mode menu for chose if we want to join or create a party and the pseudo
+    Creator :     Joel Pfund
+    Created :     24.04.2015
+    Modified :    30.05.2015
+ */
 public class VersusActivityMenu extends ActionBarActivity  {
 
     Button createPartyButton;
     Button joinPartyButton;
+    Button goBackButton;
 
     int portNumber = 9000;
 
@@ -40,12 +49,21 @@ public class VersusActivityMenu extends ActionBarActivity  {
                 CreateNewClientParty();
             }
         });
+
+        goBackButton = (Button) findViewById((R.id.backButton));
+        goBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     } // onCreate
 
 
-    /*  Summary :   Controle que l'appareil est bien connecte au reseau
+    /*  Summary :   Control if the tablet is well connected to the network
     *   Param. :    Nothing
-    *   Returns:    Nothing
+    *   Returns:    A true if it's connected
     *   Exception : -
     */
     private boolean checkConnection() {
@@ -59,7 +77,7 @@ public class VersusActivityMenu extends ActionBarActivity  {
     } // checkConnection
 
 
-    /*  Summary :   Lance le mode Versus en accueillant un autre joueur
+    /*  Summary :   Create the party and wait for an opponent
     *   Param. :    Nothing
     *   Returns:    Nothing
     *   Exception : -
@@ -69,6 +87,8 @@ public class VersusActivityMenu extends ActionBarActivity  {
         if(checkConnection()){
             NetworkConnectionServer netConnect = new NetworkConnectionServer();
             Toast.makeText(this, "Nouvelle partie en mode server", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, VersusActivity.class);
+            startActivity(intent);
         }
         else{
             Toast.makeText(this, "Vous n'êtes pas connecté au réseau. Connectez-vous et réessayez", Toast.LENGTH_LONG).show();
@@ -76,7 +96,7 @@ public class VersusActivityMenu extends ActionBarActivity  {
     } // CreateNewServerParty
 
 
-    /*  Summary :   Lance le mode Versus en rejoignant un autre joueur
+    /*  Summary :   Join a party created by another gamer
     *   Param. :    Nothing
     *   Returns:    Nothing
     *   Exception : -
@@ -85,10 +105,11 @@ public class VersusActivityMenu extends ActionBarActivity  {
         if(checkConnection()){
             NetworkConnectionServer netConnect = new NetworkConnectionServer();
             Toast.makeText(this, "Nouvelle partie en mode client", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, VersusActivity.class);
+            startActivity(intent);
         }
         else{
             Toast.makeText(this, "Vous n'êtes pas connecté au réseau. Connectez-vous et réessayez", Toast.LENGTH_LONG).show();
         }
     } // CreateNewClientParty
-
 }

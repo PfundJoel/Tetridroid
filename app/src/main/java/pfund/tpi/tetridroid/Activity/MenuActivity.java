@@ -14,12 +14,11 @@ import java.util.HashMap;
 import pfund.tpi.tetridroid.R;
 
 /*
-    Titre :       MenuActivity
-    Description : Classe qui contient notamment la gestion du menu principal
-    Créateur :    Joël Pfund
-    Créé le :     30.04.2015
-    Modifié le :  08.05.2015
-
+    Title :       MenuActivity
+    Summary :     Class that contains the base menu
+    Creator :     Joel Pfund
+    Created :     30.04.2015
+    Modified :    08.05.2015
  */
 public class MenuActivity extends ActionBarActivity {
 
@@ -110,14 +109,14 @@ public class MenuActivity extends ActionBarActivity {
                 }
             }
         });
-    }
+    } // inCreate
 
 
     // TODO : Penser au onExit() au cas où la personne Kill le process depuis le menu principal
 
     private void launchGame(View view) {
-    Intent intent = new Intent(this, GameView.class);
-    startActivity(intent);
+        Intent intent = new Intent(this, GameView.class);
+        startActivity(intent);
     } // launchGame
 
     private void launchVersusMenu(View view) {
@@ -129,28 +128,4 @@ public class MenuActivity extends ActionBarActivity {
         Intent intent = new Intent(this, OptionView.class);
         startActivity(intent);
     } // launchOptionMenu
-
-    /*PAS BESOINS POUR L'INSTANT
-
-    @Override
-     public boolean onCreateOptionsMenu(Menu menu) {
-     Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-     Handle action bar item clicks here. The action bar will
-     automatically handle clicks on the Home/Up button, so long
-     as you specify a parent Activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-    noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 }

@@ -12,14 +12,12 @@ import android.widget.TextView;
 import pfund.tpi.tetridroid.Class.Level;
 import pfund.tpi.tetridroid.R;
 
-
 /**
- * Titre :       ScoreFragment
- * Description : Classe qui gere l'affichage du fragment qui gere les scores et le
- *               high score du joueur
- * Créateur :    Joël Pfund
- * Créé le :     11.05.2015
- * Modifié le :  13.05.2015
+ * Title :       ScoreFragment
+ * Summary :     Class of the fragment that manage score and high score of the player
+ * Creator :     Joël Pfund
+ * Created :     11.05.2015
+ * Modified :    13.05.2015
  */
 public class ScoreFragment extends Fragment {
 
@@ -29,9 +27,6 @@ public class ScoreFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of this fragment
-     */
     public static ScoreFragment newInstance() {
         ScoreFragment fragment = new ScoreFragment();
 
@@ -51,18 +46,32 @@ public class ScoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_score, container, false);
+        View v = inflater.inflate(R.layout.fragment_score, container, false);
+
+        scoreView = (TextView) v.findViewById(R.id.TextViewScore);
+        highScoreView = (TextView) v.findViewById(R.id.TextViewHighScore);
+
+        return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
+    /*  Summary :   change the value in the textView with new score
+    *   Param. :    int : new score
+    *   Returns:    Nothing
+    *   Exception : -
+    */
+    public void updateScore(int score){
+        scoreView.setText(score);
     }
 
-    public void updateScore(){
 
+    /*  Summary :   change the value in the textView with new score
+    *   Param. :    int : new highScore
+    *   Returns:    Nothing
+    *   Exception : -
+    */
+    public void updateHighScore(int highScore){
+        highScoreView.setText(highScore);
     }
 
     @Override
@@ -92,10 +101,6 @@ public class ScoreFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the Activity and potentially other Fragments contained in that
      * Activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

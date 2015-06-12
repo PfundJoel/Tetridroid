@@ -1,11 +1,9 @@
 package pfund.tpi.tetridroid.Class;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
-
-import java.util.Timer;
 
 import pfund.tpi.tetridroid.Activity.GameView;
 import pfund.tpi.tetridroid.Activity.OptionView;
@@ -16,92 +14,133 @@ import pfund.tpi.tetridroid.R;
 
 /**
  * Title :       GameFunction
- * Description : Classe qui gère le fonctionnement global du jeu, pause, reprendre,
- *               nouvelle partie, mise à jour des points, ...
- * Author :      Joël Pfund
+ * Description : Class that manage the global functions of the game... Play, Pause, Resume, Start new game, scores
+ * Author :      Joel Pfund
  * Created :     31.04.2015
- * Modified :    22.05.2015
+ * Modified :    30.05.2015
  */
 public class GameFunction extends OptionView {
-
     public static final String PREFS_OPTIONS = "Tetridroid";
+    public SharedPreferences PlayerProfile;
 
     int[][] position;
 
     Level myLevel = new Level();
     GameView gameView;
 
-    Brick currentBrick;
-    Brick nextBrick;
+    public Brick currentBrick;
+    public Brick nextBrick;
 
     GameGridFragment gameGridFragment;
+
     // State of the game
     private boolean GameIsStarted = false;
     private boolean GameIsRunning = false;
 
-    // Constructeur
     public GameFunction(GameView gameView){
         this.gameView = gameView;
     }
 
-    public void StartNewGame(){
+    /**
+     * Task to run on the UIThread because they change the User Interface
+     **/
 
+    // - Launch new Brick on the grid
+    Thread launchBrickThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            GameFunction.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameView.launchNewBrick(currentBrick);
+                } // run
+            });
+        } // run
+    });
+
+    // - Move the Brick down and wait
+    Thread updateThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            GameFunction.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameView.updateBricks(currentBrick);
+
+                } // run
+            });
+        } // run
+    });
+
+
+    /** Summary :   Start a new game
+     *   Param. :    Nothing
+     *   Returns:    Nothing
+     *   Exception : -
+     */
+    public void StartNewGame() {
         GameIsStarted = true;
         GameIsRunning = true;
 
         DelayBeforeStart();
+        nextBrick = CreateBrick();
+
+
+        Thread game = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while (getCurrentGameState()) {
+                    gameLoop();
+                }
+
+            }
+        });
+        game.start();
+
 
     } // startNewGame
 
-
     public boolean getGameState(){
-
         return GameIsStarted;
     }
-
     public boolean getCurrentGameState(){
-
         return GameIsRunning;
     }
 
     public void setGameState(boolean gameIsStarted){
         GameIsStarted = gameIsStarted;
     }
-
     public void setCurrentGameState(boolean gameIsRunning){
         GameIsRunning = gameIsRunning;
     }
 
-    // Met le jeu en pause s'il est en cours ou le reprend s'il est en pause
 
-
-    /*  Summary :   Put the game in pause if it's running or resume after a delay if it's paused
-    *   Param. :    Nothing
-    *   Returns:    Nothing
-    *   Exception : -
-    */
+    /** Summary :   Put the game in pause if it's running or resume after a delay if it's paused
+     *   Param. :    Nothing
+     *   Returns:    Nothing
+     *   Exception : -
+     */
     public void PauseGame() {
         setCurrentGameState(!getCurrentGameState());
 
         if (getCurrentGameState()){
             DelayBeforeStart();
         }
-        else{
+        else {
             setCurrentGameState(false);
         }
     } // PauseGame
 
 
-    /*  Summary :   Met fin au jeu si le joueur confirme l'action
-    *   Param. :    Nothing
-    *   Returns:    Nothing
-    *   Exception : -
-    */
+    /** Summary :   Stop the game if the gamer confirm the action
+     *   Param. :    Nothing
+     *   Returns:    Nothing
+     *   Exception : -
+     */
     public void StopGame(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(gameView);
         alertDialogBuilder.setTitle("Attention");
-
         alertDialogBuilder
                 .setMessage("Voulez-vous vraiment quitter ?")
                 .setCancelable(false)
@@ -118,128 +157,119 @@ public class GameFunction extends OptionView {
                         dialog.cancel();
                     }
                 });
-
         // create alert dialog and show it
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    } // StopGame
 
-    }
 
-
-    /*  Summary :   Compte a rebours de 3 secondes avant de démarrer/reprendre la partie
-    *   Param. :    Nothing
-    *   Returns:    Nothing
-    *   Exception : -
-    */
+    /** Summary :   Timer of 3 seconds before start or resume the game.
+     *   Param. :    Nothing
+     *   Returns:    Nothing
+     *   Exception : -
+     */
     public void DelayBeforeStart(){
+        Thread pauseThread = new Thread(new Runnable() {
 
-        // TODO: Ajouter une animation sympa
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                // StartGame
+                GameFunction.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("_____Delay before start_____");
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } // run
+                });
+            } // run
+        });
+        pauseThread.start();
+    } // DelayBeforeStart
 
-            }
-        }, 3000);
 
-    }
-
-
-    /*  Summary :   Boucle qui contient les "tours" du jeu.
-    *   Param. :    Nothing
-    *   Returns:    Nothing
-    *   Exception : -
-    */
+    /** Summary :   Loop that contains the "round" of the game
+     *   Param. :    Nothing
+     *   Returns:    Nothing
+     *   Exception : -
+     */
     public void gameLoop() {
 
-        nextBrick = CreateBrick();
+        currentBrick = nextBrick;// nextBrick;
+        //CreateBrick();
+        //launchBrickThread.start();
+        gameView.deleteOldBricks(currentBrick);
 
-        System.out.println("nextBrickCoord avant de devenir current : " + nextBrick.coordBrick[0][0] +" "+ nextBrick.coordBrick[0][1]);
+        //TODO if newBrick =>
+        //gameView.launchNewBrick(currentBrick);
 
-        // La piece "next" devient la piece en cours
-        currentBrick = nextBrick;
+        gameView.updateBricks(currentBrick);
 
-        System.out.println("CurrentBrickCoord. coord prisent à current : " + currentBrick.coordBrick[0][0] +" "+ currentBrick.coordBrick[0][1]);
+        try {
+            Thread.sleep(myLevel.getSpeed());
+            //updateThread.sleep(myLevel.getSpeed());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        // On cree une nouvelle piece
-        CreateBrick();
-
-        System.out.println("nouvelle nextBrickCoord: " + nextBrick.coordBrick[0][0] +" "+ nextBrick.coordBrick[0][1]);
-        // On lance la brique sur la grille
-        gameView.launchNewBrick(currentBrick);
-
-        do
-        {
-            System.out.println("__--__--_______plop_______--__--__");
-            currentBrick.Positionning(0);
-            gameView.updateBricks(currentBrick);
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        } while (/*gameView.canBrickGoDown(currentBrick) &&*/ GameIsRunning);
+        currentBrick.Positionning(0);
+        //updateThread.start();
 
     } // gameLoop
 
 
-    /*  Summary :   Creer une nouvelle piece
-    *               afin de faire changer la couleur des cases
-    *   Param. :    la brique a afficher sur la grille
-    *   Returns:    nothing
-    *   Exception : -
-    */
+    /** Summary :   Create a new brick
+     *   Param. :    nothing
+     *   Returns:    nothing
+     *   Exception : -
+     */
     public Brick CreateBrick(){
 
         Brick brick = new Brick() { };
         brick = brick.newBrick();
 
-        System.out.println("brick just created "+ brick.coordBrick[0][0]);
         return brick;
+    } // CreateBrick
 
-    }
 
-
-    /*  Summary :   Contrôle de la grille pour voir s'il faut éliminer des lignes
-    *   Param. :    Nothing
-    *   Returns:    Nothing
-    *   Exception : -
-    */
+    /** Summary :   Check the grid for see if it's necessary to delete line
+     *   Param. :    Nothing
+     *   Returns:    Nothing
+     *   Exception : -
+     */
     public void CheckGrid(){
         gameGridFragment.CheckLine();
     }
 
 
-    /*  Summary :   Ajoute les points au score total
-    *   Param. :    Points that we have to add to the score
-    *   Returns:    Nothing
-    *   Exception : -
-    */
+    /** Summary :   Ajoute les points au score total
+     *   Param. :    Points that we have to add to the score
+     *   Returns:    Nothing
+     *   Exception : -
+     */
     public void UpdateScore(int PointToAdd){
-
         myLevel.AddPoint(PointToAdd);
-    }
+    } // UpdateScore
 
 
-    /*  Summary :   Contrôle les options gérer les lecteurs de son et de musique
-    *   Param. :    -
-    *   Returns:    Nothing
-    *   Exception : -
-    */
+    /** Summary :   Check the option for see if music or sounds have to be played
+     *   Param. :    -
+     *   Returns:    Nothing
+     *   Exception : -
+     */
     private MediaPlayer checkOptions(){
 
-/*      String isMusicOn = PlayerProfile.getString(SP_Music, "");
+        String isMusicOn = PlayerProfile.getString(SP_Music, "");
         String isSoundOn = PlayerProfile.getString(SP_Sound, "");
 
         MediaPlayer TetrisMusic = MediaPlayer.create(this, R.raw.tetrissong);
-*/
+
         // TODO: Changer les sons du jeu
         MediaPlayer GameSounds = MediaPlayer.create(this, R.raw.tetrissong);
 
-/*
+
         if (isMusicOn == "On"){
             TetrisMusic.start();
             TetrisMusic.setLooping(true);
@@ -249,8 +279,7 @@ public class GameFunction extends OptionView {
 
             GameSounds.reset();
         }
-*/
+
         return GameSounds;
     } // checkOptions
-
 }

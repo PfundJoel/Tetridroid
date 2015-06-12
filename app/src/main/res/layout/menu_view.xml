@@ -21,7 +21,8 @@
         android:layout_gravity="center_vertical"
         />
 
-    <TextView android:id="@+id/textMenu"
+    <TextView
+        android:id="@+id/textMenu"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:textStyle="bold"
